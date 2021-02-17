@@ -1,0 +1,8 @@
+.page-cart {
+  display: grid;
+  grid-template-columns: 1fr 447px;
+  grid-column-gap: 44px;
+  width: 100%;
+  min-height: calc(100vh - #{$footer_height + $header_height});
+  padding: $content_padding;
+}

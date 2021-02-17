@@ -1,0 +1,49 @@
+.input {
+  width: 100%;
+  .input__label {
+    height: inherit;
+    width: inherit;
+    position: relative;
+    span {
+      @include font('monserat-500', "sm", "orange", 17px);
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+    }
+
+    input {
+      height: inherit;
+      width: inherit;
+      border-bottom: 1px solid color('border_input');
+      padding: 13px 0;
+      @include font('monserat-500', "sm", "main_text_color", 17px);
+      &::placeholder {
+        font-size: 14px;
+        line-height: 17px;
+        color: color("label_input");
+      }
+
+      &:not(:placeholder-shown)  {
+        &+span {
+          opacity: 1;
+          top: -20px;
+          transition: top 0.2s ease-in;
+        }
+      }
+    }
+  }
+
+  .input__errors {
+    margin-bottom: 10px;
+    .input__error {
+      @include font('monserat-500', "extraSm", "notify_error_color", 17px);
+    }
+
+    &+.input__label {
+      input {
+        border-bottom: 1px solid color('notify_error_color');
+      }
+    }
+  }
+}

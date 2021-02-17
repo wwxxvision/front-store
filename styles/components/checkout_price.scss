@@ -1,0 +1,32 @@
+.checkout-price {
+  @include box(447px, auto);
+  padding: 30px;
+  background-color: color("window_color");
+
+  .checkout-price__title {
+    @include font("monserat-600", "extraBig", "main_text_color" , 29px);
+  }
+
+  .checkout-price__positions-list {
+    border-bottom: 1px dashed color("dashed_border");
+    padding: 20px 0;
+    .checkout-price__position {
+      display: flex;
+      justify-content: space-between;
+      @include font("normal", "extraMed", "main_text_color" , 140%);
+    }
+  }
+
+  .checkout-price__total-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 0;
+    .name {
+      @include font("monserat-600", "extraMed", "main_text_color" ,  140%);
+    }
+    .price {
+      @include font("monserat-600", "smMed", "main_text_color" ,  140%);
+    }
+  }
+}

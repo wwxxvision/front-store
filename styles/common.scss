@@ -1,0 +1,71 @@
+$colors: ("orange": #FF8A00, "main_text_color": #252525,
+        "window_color": #F2F2F2, "second_text_color": #AAAAAA,
+        "price_color": #545454, "white": #FFFFFF, 'border_input': #BEBEBE,
+        "label_input": #A0A0A0,
+        "counter__border": #EEEEEE,
+        "notify_error_color": #FF4747, "gray": #CACACA, "dashed_border": #D3D3D3);
+
+$fonts: ("monserat-600": 600, "monserat-500": 500, "monserat-normal": normal, "bold": bold);
+$fontSize: ("extraSm": 12px, "sm": 14px, "extraMed": 16px, "smMed": 22px, "med": 24px, "extraBig": 26px, "big": 40px);
+$content_padding: 45px 0;
+$width_filter_sidebar: 330px;
+$header_height: 64px;
+$footer_height: 144px;
+$product_card_width: 330px;
+
+@function color($color_name) {
+  @return map-get($colors, $color_name);
+}
+
+
+@mixin fontFamily($font_name) {
+  font-weight: map-get($fonts, $font_name);
+  font-family: 'Montserrat', sans-serif;
+}
+
+@mixin fontSize($font_size) {
+  font-size: map-get($fontSize, $font_size);
+}
+
+@mixin font($font_name, $font_size, $color,  $line_height) {
+  @include fontFamily($font_name);
+  @include fontSize($font_size);
+  @if variable-exists("line_height") {
+    line-height: $line_height;
+  }
+  @if variable-exists("color") {
+    color: color($color);
+  }
+}
+
+@mixin box($width, $height) {
+  width: $width;
+  height: $height;
+}
+
+a {
+  text-decoration: none;
+  color: color("main_text_color");
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+  outline: none;
+}
+
+input {
+  border: none;
+}
+
+
+.wrapper {
+  padding: 0 30px;
+}

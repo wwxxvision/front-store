@@ -1,0 +1,17 @@
+.filter-attribute {
+  .filter-attribute__title {
+    @include font('monserat-600', "sm", "main_text_color", 14px);
+  }
+
+  .filter-attribute__list {
+    margin-top: 20px;
+    .filter-attribute__item {
+      margin-top: 15px;
+    }
+  }
+
+  &:not(:first-child) {
+    margin-top: 45px;
+  }
+
+}

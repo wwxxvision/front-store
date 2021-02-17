@@ -1,0 +1,69 @@
+.product-cart {
+  display: grid;
+  grid-template-areas:
+    "thumb info icon"
+    "thumb info icon"
+    "thumb info icon"
+    "thumb info icon";
+  grid-template-columns: 117px 1fr 17px;
+  grid-template-rows: repeat(4, 1fr);
+  grid-column-gap: 15px;
+  align-items: stretch;
+  padding: 29px 0;
+  border-bottom: 1px dashed color("dashed_border");
+  .product-cart__thumb {
+    grid-area: thumb;
+
+    img {
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+  .product-cart__info {
+    grid-area: info;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .name {
+      @include font("monserat-normal", "sm", "main_text_color", 140%);
+    }
+
+    .variants {
+      display: flex;
+
+      .variant {
+        &:not(:first-child) {
+          margin-left: 15px;
+        }
+        .variant__name {
+          @include font("monserat-normal", "extraSm", "gray", 140%);
+        }
+
+        .variant__value {
+          @include font("monserat-600", "extraSm", "main_text_color", 140%);
+        }
+      }
+    }
+
+    .price-and-status {
+      .price {
+        @include font("bold", "extraMed", "price_color", 140%);
+      }
+
+      .status {
+        @include font("monserat-normal", "extraSm", "price_color", 140%);
+
+        &.status_type-preorder {
+          margin-left: 15px;
+          color: color('orange');
+        }
+      }
+    }
+  }
+
+  .product-cart__remove-icon {
+    grid-area: icon;
+  }
+}

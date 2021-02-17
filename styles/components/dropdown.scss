@@ -1,0 +1,30 @@
+.dropdown {
+  height: calc(100vh - #{$header_height});
+  width: 100%;
+  background-color: color("white");
+  position: absolute;
+  left: 0;
+  top: $header_height;
+  padding: 30px;
+  display: none;
+  .dropdown__wrapper {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-items: center;
+
+    .dropdown__group {
+      .title {
+        @include font('monserat-600', "sm", "main_text_color", 17px);
+      }
+
+      .dropdown__list {
+        .dropdown__item {
+          margin-top: 10px;
+          .dropdown__link {
+            @include font('monserat-500', "extraSm", "main_text_color", 17px);
+          }
+        }
+      }
+    }
+  }
+}

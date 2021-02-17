@@ -1,0 +1,15 @@
+.catalog {
+  display: grid;
+  grid-template-columns: repeat(3 , minmax($product_card_width, 1fr));
+  grid-column-gap: 20px;
+  grid-row-gap: 70px;
+  position: relative;
+  padding-bottom: 70px;
+  .catalog__load-more {
+    width: 300px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 0;
+  }
+}

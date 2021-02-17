@@ -1,0 +1,19 @@
+.form {
+  .form__title {
+    @include font('monserat-600', "extraMed", "main_text_color", 18px);
+    margin-top: 60px;
+  }
+
+  .form__row {
+    margin-top: 35px;
+
+    .form__line {
+      display: flex;
+      .checkbox {
+        &:not(:first-child) {
+          margin-left: 40px;
+        }
+      }
+    }
+  }
+}

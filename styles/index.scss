@@ -1,0 +1,27 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+
+@import './common';
+@import "./components/product_cart";
+@import "./components/counter";
+@import "./components/checkout_price";
+@import "./components/button";
+@import "./components/input";
+@import "./components/checkbox";
+@import "./components/product_card";
+@import "./components/filter_attribute";
+@import "./components/dropdown";
+
+@import "./layers/content";
+@import "./layers/cart_page";
+@import "./layers/footer";
+@import "./layers/header";
+@import "layers/form";
+@import "./layers/auth_page";
+@import "./layers/catalog_page";
+@import "./layers/catalog";
+@import "./layers/sidebar";

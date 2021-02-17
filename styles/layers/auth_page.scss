@@ -1,0 +1,18 @@
+.page-auth {
+  display: grid;
+  grid-template-columns: 1fr 50%;
+  width: 100%;
+  min-height: 100vh;
+
+  .page-auth__wrapper {
+    padding: $content_padding;
+    .wrapper {
+      .content {
+        .button {
+          margin-top: 40px;
+          width: 230px;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,13 @@
+.button {
+  @include box(100%, 45px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  @include font("monserat-600", "sm", "white" , 17px);
+  cursor: pointer;
+  &.button_state-active {
+    background-color: color("orange");
+    color: color("white");
+  }
+
+}

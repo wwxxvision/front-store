@@ -1,0 +1,25 @@
+.page-catalog {
+  width: 100%;
+  min-height: calc(100vh - #{$footer_height + $header_height});
+  padding: $content_padding;
+  .content {
+    .page-catalog_content {
+      display: grid;
+      grid-template-columns: $width_filter_sidebar 1fr;
+      grid-column-gap: 20px;
+
+      .sidebar {
+        margin-top: 35px;
+      }
+
+      .catalog {
+        margin-top: 35px;
+       .catalog__load-more {
+         display: flex;
+         align-items: center;
+         justify-content: center;
+       }
+      }
+    }
+  }
+}

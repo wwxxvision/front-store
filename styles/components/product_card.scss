@@ -1,0 +1,44 @@
+.product-card {
+  display: inline-block;
+  .product-card__thumbnail  {
+    position: relative;
+    .product-card__label {
+      z-index: 1;
+      position: absolute;
+      top: 17px;
+      left: 0;
+      padding: 15px;
+      @include font('monserat-600', "extraSm", "main_text_color", 15px);
+
+      &.product-card__label_state-sale {
+        background-color: color("white");
+        color: color("notify_error_color");
+      }
+    }
+     img {
+       width: 100%;
+       height: 402px;
+       object-fit: cover;
+       object-position: center center;
+     }
+  }
+
+  .product-card__name {
+    margin-top: 10px;
+    @include font('monserat-500', "sm", "main_text_color", 140%);
+  }
+
+  .product-card__price {
+    margin-top: 10px;
+    @include font('monserat-500', "extraMed", "main_text_color", 150%);
+    display: flex;
+    .old-price {
+      opacity: 0.5;
+      text-decoration: line-through;
+    }
+
+    .new-price {
+      margin-left: 10px;
+    }
+  }
+}

@@ -1,0 +1,7 @@
+.content {
+  .title {
+    @include font("monserat-600", "extraBig", "main_text_color" ,32px);
+    padding: 0;
+    margin: 0;
+  }
+}

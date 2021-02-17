@@ -1,0 +1,40 @@
+.footer {
+  height: $footer_height;
+  background-color: color("window_color");
+  padding: 50px 30px;
+  display: grid;
+  align-items: center;
+  grid-template-columns: repeat(3, 1fr);
+  .footer__logo {
+    justify-self: flex-start;
+    width: 189px;
+  }
+
+  .footer__nav {
+    justify-self: center;
+    .menu {
+      display: flex;
+      .menu__item {
+        &:not(:first-child) {
+          margin-left: 50px;
+        }
+        .menu__link {
+          display: inline-block;
+          @include font("monserat-600", "sm", "main_text_color", 150%);
+        }
+      }
+    }
+  }
+
+  .footer_socials {
+    justify-self: flex-end;
+    display: flex;
+    .social__link {
+      &:not(:first-child) {
+        margin-left: 25px;
+      }
+      display: inline-block;
+      @include font("normal", "sm", "price_color", 150%);
+    }
+  }
+}
