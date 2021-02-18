@@ -7,7 +7,7 @@ export class BaseContoller {
     res: NextApiResponse
     query: NextApiRequestQuery
     model
-    endpoint = ''
+    endpoint
     private systemQueriesList = ['method', 'type', 'id']
 
 
@@ -23,10 +23,15 @@ export class BaseContoller {
         return newQueries;
     }
 
+    private RequireModule(moduleName) {
+
+    }
+
     constructor(req, res) {
         this.req = req;
         this.res = res;
         this.query = this.req.query;
+        this.endpoint = this.query.endpoint;
     }
 
     public SetResponse(data, status) {
@@ -38,19 +43,18 @@ export class BaseContoller {
 
     public async GetList(usePagination = false) {
         this.query = this.DeleteSystemQueries(this.query);
-
         try {
             const result = await ApiConnection.get(this.endpoint, {...this.query});
 
-            if (usePagination) {
+          /*  if (usePagination) {
                 return {data: result.data, pages: result.headers['x-wp-totalpages']};
-            }
+            }*/
 
-            return  result.data;
+            return  this.SetResponse(result.data, 'ok');
         }
 
         catch (err) {
-
+            console.log(err)
         }
     }
 

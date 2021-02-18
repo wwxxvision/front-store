@@ -1,7 +1,10 @@
-import  '../styles/index.scss';
+import '../styles/index.scss';
+import {StateProvider} from "../client/store";
 
-function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
+function MyApp({Component, pageProps}) {
+    return <StateProvider>
+        <Component {...pageProps} />
+    </StateProvider>
 }
 
 export default MyApp

@@ -1,6 +1,6 @@
 export const API = {
     TOP_CATEGORIES: {
-        url: "/api/get/model?type=categories&method=GetList&parent=0",
+        url: "/api/get/model?endpoint=products/categories&method=GetList&parent=0",
         options: {
             method: "GET",
             headers:  {
@@ -9,7 +9,7 @@ export const API = {
         }
     },
     CHILD_TOP_CATEGORIES: {
-        url: "/api/get/model?type=categories&method=GetList",
+        url: "/api/get/model?endpoint=products/categories&method=GetList",
         options: {
             method: "GET",
             headers:  {
@@ -18,7 +18,16 @@ export const API = {
         }
     },
     CATALOG_PRODUCTS: {
-        url: "/api/get/model?type=products&method=GetList",
+        url: "/api/get/model?endpoint=products&method=GetList",
+        options: {
+            method: "GET",
+            headers:  {
+                "Content-Type": "application/json"
+            }
+        }
+    },
+    FILTER_CATALOG_PRODUCTS: {
+        url: "/api/get/model?endpoint=products&method=GetList",
         options: {
             method: "GET",
             headers:  {
@@ -36,7 +45,7 @@ export const API = {
         }
     },
     ATTRIBUTES: {
-        url: "/api/get/model?type=attributes&method=GetList",
+        url: "/api/get/model?endpoint=products/attributes&method=GetList",
         options: {
             method: "GET",
             headers:  {

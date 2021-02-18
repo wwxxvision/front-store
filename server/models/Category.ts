@@ -11,7 +11,7 @@ type CategoryType =  {
     count: Number
 }
 
-export class CategoryModel {
+export default class CategoryModel {
     category: CategoryType;
 
     constructor(Data) {

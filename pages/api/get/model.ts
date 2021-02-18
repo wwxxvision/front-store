@@ -1,21 +1,22 @@
-import {ProductController} from "../../../server/controllers/ProductController";
-import {CategoryController} from "../../../server/controllers/CategoryController";
-import {AttributeController} from "../../../server/controllers/AttributeController";
-import {AttributeTermController} from "../../../server/controllers/AttributeTermController";
+// import {ProductController} from "../../../server/controllers/ProductController";
+// import {CategoryController} from "../../../server/controllers/CategoryController";
+// import {AttributeController} from "../../../server/controllers/AttributeController";
+// import {AttributeTermController} from "../../../server/controllers/AttributeTermController";
+import {BaseContoller} from "../../../server/controllers/BaseContoller";
 
 export default (req, res) => {
-    const controllersList = {
-        'products': ProductController,
-        'categories': CategoryController,
-        'attributes': AttributeController,
-        'attributeTerm': AttributeTermController,
-    }
+    // const controllersList = {
+    //     'products': ProductController,
+    //     'categories': CategoryController,
+    //     'attributes': AttributeController,
+    //     'attributeTerm': AttributeTermController,
+    // }
 
     const method = req.query.method,
         type = req.query.type;
 
 
-    const controller = new controllersList[type](req, res);
+    const controller = new BaseContoller(req, res);
 
     controller[method]();
 }

@@ -1,13 +1,21 @@
+import React, {useContext, useEffect} from 'react';
 import {API} from "../../client/api";
 import {CONFIG} from "../../client/config";
+import {store} from "../../client/store";
 
 import Head from 'next/head'
 import {Header} from "../../layouts";
-import {FilterAttribute, Button} from "../../components";
-import {ProductList} from "../../containers";
+import {ProductList, FilterList} from "../../containers";
 
 
 export default function Home({topCategories, childTopCategoriesList, category, products, attributesList, pages}) {
+    const AppStore = useContext(store);
+
+    useEffect(() => {
+        AppStore.dispatch({type: "UPDATE_CATEGORY_ID", categoryID: category.id})
+        AppStore.dispatch({type: "UPDATE_CATALOG_PRODUCTS", products: products})
+    }, []);
+
     return (
         <>
             <Head>
@@ -26,13 +34,14 @@ export default function Home({topCategories, childTopCategoriesList, category, p
                         <div className="page-catalog_content">
                             <aside className="sidebar">
                                 <div className="sidebar__wrapper">
-                                    {attributesList.map(attribute => <FilterAttribute key={attribute.attribute.id} attribute={attribute} />)}
-                                    <Button state="active" title="Применить" />
+                                    <FilterList attributesList={attributesList} categoryID={category.id}/>
                                 </div>
                             </aside>
 
                             <div className="catalog">
-                                <ProductList categoryID={category.id} initialProducts={products} pages={pages} />
+                                {AppStore.state.products.length > 0 &&
+                                <ProductList categoryID={category.id} initialProducts={AppStore.state.products}
+                                             pages={pages}/>}
                             </div>
                         </div>
                     </div>
@@ -49,9 +58,8 @@ export async function getServerSideProps({params}) {
     const topCategories = await responseTopCategories.json();
 
     let childTopCategoriesList = [];
-
     for await (let topyCategory of topCategories.data) {
-        const responseChildTopCategories = await fetch(process.env.APP_URL + API.CHILD_TOP_CATEGORIES.url + `&parent=${topyCategory.category.id}`, {...API.CHILD_TOP_CATEGORIES.options});
+        const responseChildTopCategories = await fetch(process.env.APP_URL + API.CHILD_TOP_CATEGORIES.url + `&parent=${topyCategory.id}`, {...API.CHILD_TOP_CATEGORIES.options});
         const childTopCategories = await responseChildTopCategories.json();
 
         if (childTopCategories.data instanceof Array && childTopCategories.data.length > 0)
@@ -59,8 +67,8 @@ export async function getServerSideProps({params}) {
     }
 
     const allCategories = [...childTopCategoriesList, ...topCategories.data];
-    const currentCategory = allCategories.find(_category => _category.category.slug === params.slug);
-    const responseProducts = await fetch(process.env.APP_URL + API.CATALOG_PRODUCTS.url + `&category=${currentCategory.category.id}` + `&per_page=${CONFIG.PRODUCTS_PER_PAGE}`, {...API.CATALOG_PRODUCTS.options});
+    const currentCategory = allCategories.find(_category => _category.slug === params.slug);
+    const responseProducts = await fetch(process.env.APP_URL + API.CATALOG_PRODUCTS.url + `&category=${currentCategory.id}` + `&per_page=${CONFIG.PRODUCTS_PER_PAGE}`, {...API.CATALOG_PRODUCTS.options});
     const products = await responseProducts.json();
 
     const responseAttributes = await fetch(process.env.APP_URL + API.ATTRIBUTES.url, {...API.ATTRIBUTES.options});
@@ -69,7 +77,7 @@ export async function getServerSideProps({params}) {
     let attributesList = [];
 
     for await (let attribute of attributes.data) {
-        const responseAttributeTerm = await fetch(process.env.APP_URL + API.ATTRIBUTE_TERMS.url + `&id=${attribute.attribute.id}`, {...API.ATTRIBUTE_TERMS.options});
+        const responseAttributeTerm = await fetch(process.env.APP_URL + `/api/get/model?endpoint=products/attributes/${attribute.id}/terms&method=GetList`, {...API.ATTRIBUTE_TERMS.options});
         const attributeTerms = await responseAttributeTerm.json();
 
         if (attributeTerms.data instanceof Array && attributeTerms.data.length > 0) {
@@ -83,10 +91,10 @@ export async function getServerSideProps({params}) {
         props: {
             topCategories: topCategories.data,
             childTopCategoriesList,
-            category: currentCategory.category,
-            products: products.data.products,
+            category: currentCategory,
+            products: products.data,
             attributesList,
-            pages: products.data.pages
+            pages: products.pages ?? 1
         }
     }
 }

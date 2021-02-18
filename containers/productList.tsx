@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import {API} from "../client/api";
 import {CONFIG} from "../client/config";
 
@@ -40,8 +40,12 @@ export default function ProductList({initialProducts = [], pages = 1, categoryID
         upateIsLoading(false);
     }
 
+    useEffect(() => {
+        updateProducts(initialProducts);
+    }, [initialProducts]);
+
     return <>
-        {products.map(product => <ProductCard product={product} key={product.product.id}/>)}
+        {products.map(product => <ProductCard product={product} key={product.id}/>)}
         {hasMore &&
             <div className="catalog__load-more">
                 {!isLoading ?

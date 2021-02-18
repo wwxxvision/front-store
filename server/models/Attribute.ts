@@ -8,7 +8,7 @@ type AttributeType =  {
     has_archives: Boolean
 }
 
-export class AttributeModel {
+export default class AttributeModel {
     attribute: AttributeType;
 
     constructor(Data) {

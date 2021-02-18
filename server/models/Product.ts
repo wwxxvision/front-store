@@ -67,7 +67,7 @@ type ProductType =  {
     meta_data: Array<[]>
 }
 
-export class ProductModel {
+export default class ProductModel {
     product: ProductType;
 
     constructor(Data) {

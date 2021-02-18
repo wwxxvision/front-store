@@ -8,7 +8,7 @@ type AttributeTermType =  {
     has_archives: Boolean
 }
 
-export class AttributeTermModel {
+export default class AttributeTermModel {
     attributeTerm: AttributeTermType;
 
     constructor(Data) {

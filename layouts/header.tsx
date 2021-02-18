@@ -3,7 +3,7 @@ import {DropDown} from "../components";
 
 
 function getTopCategoryChildCategories(childTopCategoriesList, parentID) {
-    return childTopCategoriesList.filter(childTopCategory => childTopCategory.category.parent == parentID);
+    return childTopCategoriesList.filter(childTopCategory => childTopCategory.parent == parentID);
 }
 
 export default function Header({topCategories, childTopCategoriesList}) {
@@ -15,12 +15,12 @@ export default function Header({topCategories, childTopCategoriesList}) {
         <div className="header__nav">
             <ul className="menu">
                 {topCategories.map(topCategory => {
-                    const childCategories = getTopCategoryChildCategories(childTopCategoriesList, topCategory.category.id);
+                    const childCategories = getTopCategoryChildCategories(childTopCategoriesList, topCategory.id);
 
                     return (
-                        <li key={topCategory.category.id} className="menu__item">
-                            <Link href={`/catalog/${topCategory.category.slug}`}>
-                                <a className="menu__link menu__link_state-active">{topCategory.category.name}</a>
+                        <li key={topCategory.id} className="menu__item">
+                            <Link href={`/catalog/${topCategory.slug}`}>
+                                <a className="menu__link menu__link_state-active">{topCategory.name}</a>
                             </Link>
                             {childCategories.length > 0 &&
                                 <DropDown childTopCategoriesList={childCategories} />
