@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {API} from "../client/api";
 import {CONFIG} from "../client/config";
 
-import {ProductCard, Spinner} from "../components";
+import {ProductCard, Spinner, Button} from "../components";
 
 export default function ProductList({initialProducts = [], pages = 1, categoryID}) {
     const [products, updateProducts] = useState(initialProducts);
@@ -45,7 +45,7 @@ export default function ProductList({initialProducts = [], pages = 1, categoryID
         {hasMore &&
             <div className="catalog__load-more">
                 {!isLoading ?
-                    <div onClick={fetchMoreProducts} className="button button_state-active">Загрузить еще</div>
+                    <Button state="active" title="Загрузить еще" clickAction={fetchMoreProducts}  />
                     : <Spinner />
                 }
             </div>

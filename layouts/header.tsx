@@ -39,25 +39,25 @@ export default function Header({topCategories, childTopCategoriesList}) {
         <div className="header__user-interface">
             <ul className="interface-list">
                 <li className="interface-list__item">
-                    <img height="14" width="13" alt="Поиск по сайту" src="/assets/img/union.svg"/>
+                    <img height="14" width="13" alt="Поиск по сайту" src="/icons/union.svg"/>
                 </li>
 
                 <li className="interface-list__item">
                     <a href="#" className="interface__link">
-                        <img height="14" width="13" alt="Личный кабинет пользователя" src="/assets/img/profile.svg"/>
+                        <img height="14" width="13" alt="Личный кабинет пользователя" src="/icons/profile.svg"/>
                     </a>
                 </li>
 
                 <li className="interface-list__item">
                     <a href="#" className="interface__link">
-                        <img height="14" width="13" alt="Избранное" src="/assets/img/likes.svg"/>
+                        <img height="14" width="13" alt="Избранное" src="/icons/likes.svg"/>
                         <div className="dot"></div>
                     </a>
                 </li>
 
                 <li className="interface-list__item">
                     <a href="#" className="interface__link">
-                        <img height="14" width="13" alt="Корзина" src="/assets/img/cart.svg"/>
+                        <img height="14" width="13" alt="Корзина" src="/icons/cart.svg"/>
                     </a>
                 </li>
 

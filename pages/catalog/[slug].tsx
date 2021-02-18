@@ -3,7 +3,7 @@ import {CONFIG} from "../../client/config";
 
 import Head from 'next/head'
 import {Header} from "../../layouts";
-import {FilterAttribute, ProductCard} from "../../components";
+import {FilterAttribute, Button} from "../../components";
 import {ProductList} from "../../containers";
 
 
@@ -27,7 +27,7 @@ export default function Home({topCategories, childTopCategoriesList, category, p
                             <aside className="sidebar">
                                 <div className="sidebar__wrapper">
                                     {attributesList.map(attribute => <FilterAttribute key={attribute.attribute.id} attribute={attribute} />)}
-                                    <div className="button button_state-active">Применить</div>
+                                    <Button state="active" title="Применить" />
                                 </div>
                             </aside>
 
@@ -78,9 +78,6 @@ export async function getServerSideProps({params}) {
         }
     }
 
-    // const responseProductCount = await fetch(process.env.APP_URL + API.COUNT_PRODUCTS_IN_CATALOG.url + `&category=${currentCategory.category.id}`, {...API.COUNT_PRODUCTS_IN_CATALOG.options});
-    // const productCount = await responseProductCount.json();
-    // console.log(productCount)
 
     return {
         props: {
