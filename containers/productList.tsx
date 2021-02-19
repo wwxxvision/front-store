@@ -3,46 +3,33 @@ import {API} from "../client/api";
 import {CONFIG} from "../client/config";
 
 import {ProductCard, Spinner, Button} from "../components";
+import {SubscribeWithStore} from "../client/subscribe";
 
-export default function ProductList({initialProducts = [], pages = 1, categoryID}) {
-    const [products, updateProducts] = useState(initialProducts);
-    const [hasMore, updateHasMore] = useState(pages > 1);
-    const [page, updatePage] = useState(1);
-    const [isLoading, upateIsLoading] = useState(false);
+export default function ProductList({products}) {
+    const AppStore = SubscribeWithStore();
+    const [hasMore, updateHasMore] = useState(AppStore.state.pages > 1);
+    const [isLoading, updateIsLoading] = useState(false);
 
-    const fetchMoreProducts = async () => {
-        let newPage = page + 1;
+    const fetchMoreProducts = () => {
+        let newPage = AppStore.state.page + 1;
 
-        upateIsLoading(true);
-        updatePage(newPage);
+        updateIsLoading(true);
 
-        try {
+        AppStore.dispatch({type: "UPDATE_PAG_PAGE", page: newPage});
 
-            const productsResponse = await fetch(API.CATALOG_PRODUCTS.url + '&category=' + categoryID + '&page=' + newPage + `&per_page=${CONFIG.PRODUCTS_PER_PAGE}`, API.CATALOG_PRODUCTS.options);
-            const newProducts = await productsResponse.json();
-
-            if (newProducts.data.products) {
-                updateProducts([...products, ...newProducts.data.products]);
-            } else {
-                updateHasMore(false);
-            }
-
-        } catch (err) {
-            updateHasMore(false);
-        }
-
-        if (newPage >= pages) {
+        if (newPage >= AppStore.state.pages) {
             updateHasMore(false);
 
             return;
         }
-
-        upateIsLoading(false);
     }
 
     useEffect(() => {
-        updateProducts(initialProducts);
-    }, [initialProducts]);
+        updateHasMore(AppStore.state.pages > 1);
+        updateIsLoading(false);
+    }, [AppStore.state.pages]);
+
+
 
     return <>
         {products.map(product => <ProductCard product={product} key={product.id}/>)}

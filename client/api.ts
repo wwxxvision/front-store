@@ -18,7 +18,7 @@ export const API = {
         }
     },
     CATALOG_PRODUCTS: {
-        url: "/api/get/model?endpoint=products&method=GetList",
+        url: "/api/get/model?endpoint=products&method=GetList&pagination=yes",
         options: {
             method: "GET",
             headers:  {

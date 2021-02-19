@@ -20,7 +20,7 @@ export default async function FetchProducts(categoryID, page = 1, filterQuery = 
         const responseProducts = await fetch(url, {...API.CATALOG_PRODUCTS.options});
         const products = await responseProducts.json();
 
-        return products.data;
+        return {data: products.data, pages: products.pages};
     }
 
     catch (err) {

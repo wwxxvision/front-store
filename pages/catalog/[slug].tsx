@@ -7,11 +7,13 @@ import {
     fetchTopCategories
 } from "../../client/fetch";
 import {getCurrentCategoryBySlug} from "../../client/shop/functions";
-import { SubscribeWithStore, SubscribeWithFilters } from "../../client/subscribe"
+import { SubscribeWithStore, SubscribeOnProductsFilter, SubscribeOnProductsPagPage } from "../../client/subscribe"
+import {Empty} from "../../client/utils";
 
 import Head from 'next/head'
 import {Header} from "../../layouts";
 import {ProductList, FilterList} from "../../containers";
+
 
 export default function Home({topCategories, childTopCategoriesList, category, products, attributesList, pages}) {
     const AppStore = SubscribeWithStore();
@@ -19,9 +21,11 @@ export default function Home({topCategories, childTopCategoriesList, category, p
     useEffect(() => {
         AppStore.dispatch({type: "UPDATE_CATALOG_PRODUCTS", products: products});
         AppStore.dispatch({type: "UPDATE_CATEGORY_ID", categoryID: category.id});
+        AppStore.dispatch({type: "UPDATE_PAG_PAGES", pages: pages});
     }, []);
 
-    SubscribeWithFilters(AppStore.state, AppStore.dispatch);
+    SubscribeOnProductsFilter(AppStore.state, AppStore.dispatch);
+    SubscribeOnProductsPagPage(AppStore.state, AppStore.dispatch);
 
     return (
         <>
@@ -46,9 +50,8 @@ export default function Home({topCategories, childTopCategoriesList, category, p
                             </aside>
 
                             <div className="catalog">
-                                {AppStore.state.products.length > 0 &&
-                                <ProductList categoryID={category.id} initialProducts={AppStore.state.products}
-                                             pages={pages}/>}
+                                {!Empty(AppStore.state.products) &&
+                                <ProductList  products={AppStore.state.products} />}
                             </div>
                         </div>
                     </div>
@@ -74,9 +77,9 @@ export async function getServerSideProps({params}) {
             topCategories: topCategories,
             childTopCategoriesList,
             category: currentCategory,
-            products: products,
+            products: products.data,
             attributesList,
-            pages:  1
+            pages:  products.pages
         }
     }
 }

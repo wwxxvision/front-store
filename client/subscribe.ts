@@ -10,14 +10,29 @@ export  function SubscribeWithStore() {
     return AppStore;
 }
 
-export  function SubscribeWithFilters(state, dispatch) {
+export  function SubscribeOnProductsFilter(state, dispatch) {
     useEffect(async () => {
         if (!Empty(state.filters)) {
             let filterProductsQuery = getFilterProductsQuery(state.filters);
 
-            const products = await fetchProducts(state.categoryID, state.page, filterProductsQuery);
+            const products = await fetchProducts(state.categoryID, 1, filterProductsQuery);
 
-            dispatch({type: "UPDATE_CATALOG_PRODUCTS", products: products});
+            dispatch({type: "UPDATE_CATALOG_PRODUCTS", products: products.data});
+            dispatch({type: "UPDATE_PAG_PAGES", pages: products.pages});
         }
     }, [state.filters]);
 }
+
+export  function SubscribeOnProductsPagPage(state, dispatch) {
+    useEffect(async () => {
+        if (state.page > 1) {
+            let filterProductsQuery = getFilterProductsQuery(state.filters);
+
+            const products = await fetchProducts(state.categoryID, state.page, filterProductsQuery);
+
+            dispatch({type: "ADD_CATALOG_PRODUCTS", products: products.data});
+            dispatch({type: "UPDATE_PAG_PAGES", pages: products.pages});
+        }
+    }, [state.page]);
+}
+

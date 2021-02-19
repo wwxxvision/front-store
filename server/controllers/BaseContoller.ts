@@ -34,10 +34,11 @@ export class BaseContoller {
         this.endpoint = this.query.endpoint;
     }
 
-    public SetResponse(data, status) {
+    public SetResponse(data, status, pages?) {
         this.res.status(200).json({
             status: status,
-            data
+            data,
+            pages
         });
     }
 
@@ -46,14 +47,12 @@ export class BaseContoller {
         try {
             const result = await ApiConnection.get(this.endpoint, {...this.query});
 
-          /*  if (usePagination) {
-                return {data: result.data, pages: result.headers['x-wp-totalpages']};
-            }*/
+            if (this.query.pagination) {
+                return this.SetResponse(result.data, 'ok', result.headers['x-wp-totalpages']);
+            }
 
-            return  this.SetResponse(result.data, 'ok');
-        }
-
-        catch (err) {
+            return this.SetResponse(result.data, 'ok');
+        } catch (err) {
             console.log(err)
         }
     }
@@ -62,10 +61,8 @@ export class BaseContoller {
     public async GetByID(id) {
         try {
             const result = await ApiConnection.get(this.endpoint, {...this.query});
-            return  result.data;
-        }
-
-        catch (err) {
+            return result.data;
+        } catch (err) {
 
         }
     }
