@@ -5,15 +5,26 @@ const initialState = {
     filters: [],
     page: 1,
     pages: 1,
-    categoryID: 0
+    categoryID: 0,
+    loading: {
+        acceptFilterButton: false,
+        loadMoreButton: false
+    }
 
 };
 const store = createContext(initialState);
-const { Provider } = store;
+const {Provider} = store;
 
-const StateProvider = ( { children } ) => {
+const StateProvider = ({children}) => {
     const [state, dispatch] = useReducer((state, action) => {
-        switch(action.type) {
+        switch (action.type) {
+            case 'UPDATE_LOADING_STATE':
+                return {
+                    ...state, loading: {
+                        ...state.loading, [action.loading.key]: action.loading.value
+                    }
+                };
+                return {...state, page: action.page};
             case 'UPDATE_PAG_PAGE':
                 return {...state, page: action.page};
             case 'UPDATE_PAG_PAGES':
@@ -28,10 +39,11 @@ const StateProvider = ( { children } ) => {
                 return {...state, categoryID: action.categoryID};
             default:
                 throw new Error();
-        };
+        }
+        ;
     }, initialState);
 
-    return <Provider value={{ state, dispatch }}>{children}</Provider>;
+    return <Provider value={{state, dispatch}}>{children}</Provider>;
 };
 
-export { store, StateProvider }
+export {store, StateProvider}

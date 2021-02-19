@@ -19,16 +19,11 @@
     .menu {
       display: flex;
       .menu__item {
-        &:hover {
-         .dropdown {
-            display: block;
-          }
-        }
         &:not(:first-child) {
           margin-left: 20px;
         }
         .menu__link {
-          display: inline-block;
+          display: block;
           text-transform: uppercase;
           opacity: 0.3;
           @include font("monserat-600", "extraSm", "main_text_color", 15px);

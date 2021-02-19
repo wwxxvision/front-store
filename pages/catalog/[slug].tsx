@@ -13,9 +13,10 @@ import {Empty} from "../../client/utils";
 import Head from 'next/head'
 import {Header} from "../../layouts";
 import {ProductList, FilterList} from "../../containers";
+import {useRouter} from "next/router";
 
 
-export default function Home({topCategories, childTopCategoriesList, category, products, attributesList, pages}) {
+export default function Home({topCategories, childTopCategoriesList, category, products, attributesList, pages, allCategories}) {
     const AppStore = SubscribeWithStore();
 
     useEffect(() => {
@@ -79,7 +80,8 @@ export async function getServerSideProps({params}) {
             category: currentCategory,
             products: products.data,
             attributesList,
-            pages:  products.pages
+            pages:  products.pages,
+            allCategories,
         }
     }
 }

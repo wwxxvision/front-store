@@ -1,10 +1,8 @@
-import React, {useContext, useState} from 'react';
-import {API} from "../client/api";
-import {CONFIG} from "../client/config";
-import  { SubscribeWithStore } from "../client/subscribe";
+import React, {useEffect, useState} from 'react';
+import {SubscribeWithStore} from "../client/subscribe";
 
 
-import {Button, FilterAttribute} from "../components";
+import {Button, FilterAttribute, Spinner} from "../components";
 
 function initFilters(attributesList) {
     return attributesList.map(attribute => {
@@ -15,9 +13,10 @@ function initFilters(attributesList) {
     })
 }
 
-export default function FilterList({attributesList, categoryID}) {
+export default function FilterList({attributesList}) {
     const [filters, updateFilters] = useState(initFilters(attributesList));
     const AppStore = SubscribeWithStore();
+
 
     const onChangeFilterAttribute = (slug, termID) => {
         let newFilters = filters.map(filter => {
@@ -39,11 +38,26 @@ export default function FilterList({attributesList, categoryID}) {
         }
     }
 
-    const acceptFilters =  () =>  AppStore.dispatch({type: "UPDATE_CATALOG_FITLERS", filters: filters});
+
+    const acceptFilters = () => {
+        AppStore.dispatch({type: "UPDATE_CATALOG_FITLERS", filters: filters});
+    };
+
+    const resetFilters = () => {
+            updateFilters(initFilters(attributesList));
+            acceptFilters();
+    }
+
 
     return <>
         {attributesList.map(attribute => <FilterAttribute onChange={onChangeFilterAttribute}
                                                           key={attribute.id} attribute={attribute}/>)}
-        <Button state="active" clickAction={acceptFilters} title="Применить"/>
+        <div className="filter-buttons">
+            <div onClick={resetFilters} className="filter-buttons__reset">Сбросить фильтры</div>
+            {!AppStore.state.loading.acceptFilterButton ?
+                <Button state="active" clickAction={acceptFilters}
+                        title="Применить"/> : <Spinner/>}
+        </div>
+
     </>
 }

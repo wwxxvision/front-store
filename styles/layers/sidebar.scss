@@ -5,9 +5,19 @@
     position: sticky;
     top: $header_height + 10px;
 
-    .button {
+    .filter-buttons {
       margin-top: 50px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .filter-buttons__reset {
+        cursor: pointer;
+        @include font('normal-500', 'sm', "reset_button", 140%);
+        margin-bottom: 15px;
+      }
     }
+
   }
 
 }

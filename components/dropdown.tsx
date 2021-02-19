@@ -11,7 +11,7 @@ export default function DropDown({childTopCategoriesList}) {
                 <ul className="dropdown__list">
                     {childTopCategoriesList.map(childTopCategory => (
                         <li key={childTopCategory.id} className="dropdown__item">
-                            <Link href={`/catalog/${childTopCategory.slug}`}>
+                            <Link  href={`/catalog/${childTopCategory.slug}`}>
                                 <a className="dropdown__link">{childTopCategory.name}</a>
                             </Link>
                         </li>
