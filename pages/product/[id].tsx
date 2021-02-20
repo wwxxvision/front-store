@@ -2,22 +2,23 @@ import {
     fetchChildTopCategories,
     fetchTopCategories
 } from "../../client/fetch";
-import {getCrumbs, getParentCategory, isSale} from "../../client/shop/functions";
+import {getCrumbs, getImageSrcById, getParentCategory, isSale} from "../../client/shop/functions";
 import {
     useSubscribeOnProductVariations
-} from "../../client/subscribe"
+} from "../../client/subscribe";
+import fetchProduct from "../../client/fetch/fetchProduct";
+import fetchProductVariants from "../../client/fetch/fetchProductVariants";
 
 
 import Head from 'next/head'
 import {Header} from "../../layouts";
 import {VariantsList} from "../../containers";
 import {BreadCrumb, Button, ImageGallery} from "../../components";
-import fetchProduct from "../../client/fetch/fetchProduct";
-import fetchProductVariants from "../../client/fetch/fetchProductVariants";
+import Image from 'next/image';
 
 
 export default function Catalog({topCategories, childTopCategoriesList, category, product, allCategories, variants}) {
-    const [variant, attributesVariant] = useSubscribeOnProductVariations(variants, product.attributes)
+    const [variant, attributesVariant, activeGalleryImage, updateActiveGalleryImage] = useSubscribeOnProductVariations(variants, product.attributes, product.images);
 
     return <>
         <Head>
@@ -47,6 +48,10 @@ export default function Catalog({topCategories, childTopCategoriesList, category
 
                         <VariantsList variants={attributesVariant}/>
 
+                        <div className="product__gallery">
+                            <ImageGallery  activeGalleryImage={activeGalleryImage} updateActiveGalleryImage={updateActiveGalleryImage} images={product.images} />
+                        </div>
+
                         <div className="product__tabs">
                             <Button title="Добавить в корзину" state="active"/>
                             <div className="like-button">
@@ -66,8 +71,8 @@ export default function Catalog({topCategories, childTopCategoriesList, category
                     </div>
                 </div>
             </div>
-            <div className="block">
-                <ImageGallery images={product.images} />
+            <div className="block active-slide">
+                <Image src={getImageSrcById(activeGalleryImage, product.images)} layout="fill" objectFit="cover"  />
             </div>
         </section>
     </>

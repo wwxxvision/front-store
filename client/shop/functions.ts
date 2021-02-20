@@ -78,3 +78,9 @@ export function isSale(salePrice) {
     return Boolean(salePrice);
 }
 
+
+export function getImageSrcById(id, images) {
+    let image = images.find(image => image.id === id);
+
+    return image.src;
+}

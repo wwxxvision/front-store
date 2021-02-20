@@ -10,6 +10,21 @@
   }
 
   .keen-slider {
-    min-height: calc(100vh - #{$header_height});
+    .keen-slider__slide {
+      height: 120px;
+      border: 1px solid color("main_text_color");
+      &:hover {
+        cursor: pointer;
+        border: 1px solid color("orange");
+      }
+      &.keen-slider__slide__active {
+        border: 1px solid color("orange");
+      }
+    }
+  }
+  .block {
+    &.active-slide {
+      position: relative;
+    }
   }
 }

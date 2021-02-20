@@ -42,10 +42,11 @@ export function SubscribeOnProductsPagPage(state, dispatch) {
     }, [state.page]);
 }
 
-export function useSubscribeOnProductVariations(variants, attributes) {
+export function useSubscribeOnProductVariations(variants, attributes, images) {
     const AppStore = SubscribeWithStore();
     const [variant, updateVariant] = useState(variants[0]);
     const [attributesVariant, updateAttributes] = useState(attributes);
+    const [activeGalleryImage, updateActiveGalleryImage] = useState(images[0].id);
 
     useEffect(() => {
         const selectedColor = AppStore.state.product.color;
@@ -95,5 +96,5 @@ export function useSubscribeOnProductVariations(variants, attributes) {
     }, [AppStore.state.product.size])
 
 
-    return [variant, attributesVariant];
+    return [variant, attributesVariant, activeGalleryImage, updateActiveGalleryImage];
 }

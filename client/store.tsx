@@ -8,13 +8,12 @@ const initialState = {
     categoryID: 0,
     loading: {
         acceptFilterButton: false,
-        loadMoreButton: false
+        loadMoreButton: false,
     },
     product: {
         color: '',
-        size: ''
-    }
-
+        size: '',
+    },
 };
 const store = createContext(initialState);
 const {Provider} = store;
