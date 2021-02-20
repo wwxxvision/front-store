@@ -1,22 +1,24 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {SubscribeWithStore} from "../client/subscribe";
-
 
 import {Button, FilterAttribute, Spinner} from "../components";
 
 function initFilters(attributesList) {
     return attributesList.map(attribute => {
         return {
-            slug: attribute.slug,
-            terms: attribute.terms.map(term => ({id: term.id, active: false}))
+            ...attribute,
+            terms: attribute.terms.map(term => ({
+                ...term,
+                active: false
+            }))
         }
     })
 }
 
 export default function FilterList({attributesList}) {
     const [filters, updateFilters] = useState(initFilters(attributesList));
+    const resetedFilters = initFilters(attributesList);
     const AppStore = SubscribeWithStore();
-
 
     const onChangeFilterAttribute = (slug, termID) => {
         let newFilters = filters.map(filter => {
@@ -33,9 +35,7 @@ export default function FilterList({attributesList}) {
             return filter;
         });
 
-        return function () {
-            updateFilters(newFilters);
-        }
+        updateFilters(newFilters);
     }
 
 
@@ -44,14 +44,15 @@ export default function FilterList({attributesList}) {
     };
 
     const resetFilters = () => {
-            updateFilters(initFilters(attributesList));
-            acceptFilters();
+        if (!AppStore.state.loading.acceptFilterButton)
+            updateFilters(resetedFilters);
+            AppStore.dispatch({type: "UPDATE_CATALOG_FITLERS", filters: resetedFilters});
     }
 
 
     return <>
-        {attributesList.map(attribute => <FilterAttribute onChange={onChangeFilterAttribute}
-                                                          key={attribute.id} attribute={attribute}/>)}
+        {filters.map(attribute => <FilterAttribute onChange={onChangeFilterAttribute}
+                                                   key={attribute.id} attribute={attribute}/>)}
         <div className="filter-buttons">
             <div onClick={resetFilters} className="filter-buttons__reset">Сбросить фильтры</div>
             {!AppStore.state.loading.acceptFilterButton ?

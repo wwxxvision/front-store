@@ -1,0 +1,22 @@
+.color-picker-list {
+  display: flex;
+  align-items: center;
+  .color-picker-list__item {
+    &:not(:first-child) {
+      margin-left: 10px;
+    }
+  }
+  .color-picker {
+    display: block;
+    position: relative;
+    height: 30px;
+    width: 30px;
+    .color-picker__svg {
+      cursor: pointer;
+      .svg__circle_2 {
+        stroke: color("orange");
+        stroke-width: 2px;
+      }
+    }
+  }
+}

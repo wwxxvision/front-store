@@ -1,0 +1,30 @@
+.like-button {
+  width: 45px;
+  height: 45px;
+  border: 1px solid color("select_input_color");
+  border-radius: 2px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .like-button__input {
+    cursor: pointer;
+    height: inherit;
+    width: inherit;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+
+    &:checked {
+      &+.like-button__svg {
+        svg {
+          path {
+            fill: color("orange");
+            stroke: color("orange");
+          }
+        }
+      }
+    }
+  }
+}

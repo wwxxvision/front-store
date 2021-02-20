@@ -9,6 +9,10 @@ const initialState = {
     loading: {
         acceptFilterButton: false,
         loadMoreButton: false
+    },
+    product: {
+        color: '',
+        size: ''
     }
 
 };
@@ -22,6 +26,13 @@ const StateProvider = ({children}) => {
                 return {
                     ...state, loading: {
                         ...state.loading, [action.loading.key]: action.loading.value
+                    }
+                };
+                return {...state, page: action.page};
+            case 'UPDATE_PRODUCT':
+                return {
+                    ...state, product: {
+                        ...state.product, [action.product.key]: action.product.value
                     }
                 };
                 return {...state, page: action.page};

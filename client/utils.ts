@@ -11,3 +11,7 @@ export const UTILS = {
 export function Empty(arr): Boolean {
     return  arr.length === 0;
 }
+
+export function  isLastIndex(index, arrLength): Boolean {
+    return  arrLength - 1 === index;
+}

@@ -4,6 +4,11 @@ import ProductCard from "./productCard";
 import CheckBox from "./checkbox";
 import Spinner from "./spinner";
 import Button from "./button";
+import BreadCrumb from "./breadcrumb";
+import Select from "./select";
+import Variant from "./variant";
+import ColorPicker from "./colorPicker";
+import ImageGallery from "./imageGallery";
 
 export  {
     DropDown,
@@ -11,5 +16,10 @@ export  {
     ProductCard,
     CheckBox,
     Spinner,
-    Button
+    Button,
+    BreadCrumb,
+    Select,
+    Variant,
+    ColorPicker,
+    ImageGallery
 }

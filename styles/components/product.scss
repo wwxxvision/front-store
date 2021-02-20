@@ -1,0 +1,46 @@
+.product {
+  padding: 30px 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  .product__title {
+    margin-top: 45px;
+    @include font('monserat-500', "extraBig", "main_text_color", 140%);
+  }
+
+  .product__price {
+    margin-top: 15px;
+    .new {
+      @include font('normal', "med", "main_text_color", 140%);
+    }
+    .old {
+      @include font('normal', "extraMed", "old_price", 140%);
+      text-decoration-line: line-through;
+      margin-left: 7px;
+    }
+  }
+  .product__description {
+    margin-top: 30px;
+    @include font('normal', "sm", "product_description", 150%);
+  }
+
+  .product__variants {
+    .variant {
+      margin: 35px 0;
+      .variant__label {
+        @include font('normal', "extraMed", "product_description", 17px);
+        margin-bottom: 10px;
+      }
+    }
+  }
+
+  .product__tabs {
+    display: flex;
+    align-items: flex-end;
+    flex-grow: 2;
+
+    .like-button {
+      margin-left: 10px
+    }
+  }
+}

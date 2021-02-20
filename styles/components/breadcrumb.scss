@@ -1,0 +1,21 @@
+.breadcrumb {
+  display: flex;
+
+  .breadcrumb__item {
+    a {
+      @include font('monserat-500', "extraSm", "breadcrumb", 15px);
+      text-transform: uppercase;
+    }
+
+    &.breadcrumb__item_state-active {
+      a {
+        color: color('main_text_color');
+      }
+    }
+
+    &:not(:first-child) {
+      margin-left: 5px;
+    }
+
+  }
+}

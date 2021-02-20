@@ -11,6 +11,7 @@ export default function FilterAttribute({attribute, onChange}) {
             {attribute.terms.map(term => (
                 <li key={term.id} className="filter-attribute__item">
                     <CheckBox
+                        isActive={term.active}
                         onChange={() => onChange(attribute.slug, term.id)} label={term.name + ` (${term.count})`}
                     value={term.id}/>
                 </li>

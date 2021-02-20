@@ -6,17 +6,18 @@ import {
     fetchProducts,
     fetchTopCategories
 } from "../../client/fetch";
-import {getCurrentCategoryBySlug} from "../../client/shop/functions";
+import {getCurrentCategoryBySlug, getCrumbs} from "../../client/shop/functions";
 import { SubscribeWithStore, SubscribeOnProductsFilter, SubscribeOnProductsPagPage } from "../../client/subscribe"
 import {Empty} from "../../client/utils";
 
 import Head from 'next/head'
 import {Header} from "../../layouts";
 import {ProductList, FilterList} from "../../containers";
-import {useRouter} from "next/router";
+import {BreadCrumb} from "../../components";
 
 
-export default function Home({topCategories, childTopCategoriesList, category, products, attributesList, pages, allCategories}) {
+
+export default function Catalog({topCategories, childTopCategoriesList, category, products, attributesList, pages, allCategories}) {
     const AppStore = SubscribeWithStore();
 
     useEffect(() => {
@@ -42,6 +43,7 @@ export default function Home({topCategories, childTopCategoriesList, category, p
             <div className="wrapper">
                 <section className="page-catalog">
                     <div className="content">
+                        <BreadCrumb breadcrumb={getCrumbs(category, allCategories)} />
                         <h1 className="title">{category.name}</h1>
                         <div className="page-catalog_content">
                             <aside className="sidebar">

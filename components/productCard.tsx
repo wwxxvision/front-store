@@ -1,4 +1,4 @@
-import {UTILS} from "../client/utils";
+import {calculateSalePricePercent} from "../client/shop/functions";
 
 import Link from 'next/link';
 import Image from 'next/image';
@@ -13,7 +13,7 @@ export default function ProductCard({product}) {
             <div className="product-card__thumbnail">
                 {productIsSale &&
                 <div
-                    className="product-card__label product-card__label_state-sale">- {UTILS.PRODUCT.CalculateSalePricePercent(product.regular_price, product.sale_price)}%</div>
+                    className="product-card__label product-card__label_state-sale">- {calculateSalePricePercent(product.regular_price, product.sale_price)}%</div>
                 }
 
                 <Image

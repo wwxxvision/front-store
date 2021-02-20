@@ -5,6 +5,7 @@
 }
 
 
+
 @import './common';
 @import "./components/product_cart";
 @import "./components/counter";
@@ -15,6 +16,11 @@
 @import "./components/product_card";
 @import "./components/filter_attribute";
 @import "./components/dropdown";
+@import "./components/breadcrumb";
+@import "./components/product";
+@import "./components/like_button";
+@import "./components/select";
+@import "./components/color_picker";
 
 @import "./layers/content";
 @import "./layers/cart_page";
@@ -25,3 +31,4 @@
 @import "./layers/catalog_page";
 @import "./layers/catalog";
 @import "./layers/sidebar";
+@import "./layers/product_page";
