@@ -10,4 +10,8 @@
     color: color("white");
   }
 
+  &.button_state-disable {
+    background-color: color('gray');
+  }
+
 }

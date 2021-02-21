@@ -3,6 +3,7 @@ import {store} from "./store";
 import {Empty} from "./utils";
 import {getFilterProductsQuery} from "./shop/functions";
 import {fetchProducts} from "./fetch";
+import localForage from "localforage";
 
 export function SubscribeWithStore() {
     const AppStore = useContext(store);
@@ -81,7 +82,7 @@ export function useSubscribeOnProductVariations(variants, attributes, images) {
     }, [AppStore.state.product.color]);
 
     useEffect(() => {
-        if (AppStore.state.product.size)  {
+        if (AppStore.state.product.size) {
             let currentVariant;
 
             variants.forEach(variant => {
@@ -97,4 +98,83 @@ export function useSubscribeOnProductVariations(variants, attributes, images) {
 
 
     return [variant, attributesVariant, activeGalleryImage, updateActiveGalleryImage];
+}
+
+export function useSubscribeProductOnCart(variant, product) {
+    const AppStore = SubscribeWithStore();
+
+    useEffect(async () => {
+        let cart = await localForage.getItem('cart') ?? [];
+
+        AppStore.dispatch({
+            type: 'UPDATE_CART',
+            cart
+        });
+
+    }, []);
+
+    const productIsAlreadyInCart = () => {
+        let cart = AppStore.state.cart ?? [];
+        let productInCart = Boolean(cart.find(cartItem => cartItem.variantID === variant.id));
+
+        return productInCart;
+    }
+
+
+    const putProductInCart = async () => {
+        if (!productIsAlreadyInCart()) {
+            const preparedProductDataForCart = {
+                ...variant,
+                id: product.id,
+                name: product.name,
+                variantID: variant.id,
+                quantity: 1,
+                price: Number(variant.price),
+                availableQuantity: variant.stock_quantity,
+                isValide: 1 <= variant.stock_quantity,
+            }
+
+            if (preparedProductDataForCart.isValide) {
+                let cart = await localForage.getItem('cart') ?? [];
+                let cartWithoutPutProduct = cart.filter(cartItem => cartItem.variantID != preparedProductDataForCart.variantID);
+
+                cartWithoutPutProduct = [...cartWithoutPutProduct, preparedProductDataForCart];
+
+                AppStore.dispatch({
+                    type: 'UPDATE_CART',
+                    cart: cartWithoutPutProduct
+                });
+
+                localForage.setItem('cart', cartWithoutPutProduct);
+            }
+        }
+    }
+
+
+    return [putProductInCart, productIsAlreadyInCart];
+}
+
+export function useSubscribeOnCart() {
+    const AppStore = SubscribeWithStore();
+
+    const [cart, setCart] = useState([]);
+    const [isLoading, updateIsLoading] = useState(true);
+
+    useEffect(async () => {
+        let cart = await localForage.getItem('cart') ?? [];
+
+        AppStore.dispatch({
+            type: 'UPDATE_CART',
+            cart
+        });
+
+    }, []);
+
+
+    useEffect(() => {
+        setCart(AppStore.state.cart);
+        updateIsLoading(false);
+    }, [AppStore.state.cart])
+
+    return [cart, isLoading]
 }

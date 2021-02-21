@@ -14,6 +14,7 @@ const initialState = {
         color: '',
         size: '',
     },
+    cart: []
 };
 const store = createContext(initialState);
 const {Provider} = store;
@@ -21,13 +22,16 @@ const {Provider} = store;
 const StateProvider = ({children}) => {
     const [state, dispatch] = useReducer((state, action) => {
         switch (action.type) {
+            case 'UPDATE_CART':
+                return {
+                    ...state, cart: action.cart
+                }
             case 'UPDATE_LOADING_STATE':
                 return {
                     ...state, loading: {
                         ...state.loading, [action.loading.key]: action.loading.value
                     }
                 };
-                return {...state, page: action.page};
             case 'UPDATE_PRODUCT':
                 return {
                     ...state, product: {

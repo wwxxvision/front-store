@@ -9,6 +9,9 @@ import Select from "./select";
 import Variant from "./variant";
 import ColorPicker from "./colorPicker";
 import ImageGallery from "./imageGallery";
+import ProductCart from "./productCart";
+import CheckoutTotalWidget from "./checkoutTotalWidget";
+
 
 export  {
     DropDown,
@@ -21,5 +24,7 @@ export  {
     Select,
     Variant,
     ColorPicker,
-    ImageGallery
+    ImageGallery,
+    ProductCart,
+    CheckoutTotalWidget
 }

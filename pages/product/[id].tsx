@@ -4,21 +4,23 @@ import {
 } from "../../client/fetch";
 import {getCrumbs, getImageSrcById, getParentCategory, isSale} from "../../client/shop/functions";
 import {
+    useSubscribeProductOnCart,
     useSubscribeOnProductVariations
 } from "../../client/subscribe";
 import fetchProduct from "../../client/fetch/fetchProduct";
 import fetchProductVariants from "../../client/fetch/fetchProductVariants";
-
 
 import Head from 'next/head'
 import {Header} from "../../layouts";
 import {VariantsList} from "../../containers";
 import {BreadCrumb, Button, ImageGallery} from "../../components";
 import Image from 'next/image';
+import {removeHTML} from "../../client/utils";
 
 
 export default function Catalog({topCategories, childTopCategoriesList, category, product, allCategories, variants}) {
     const [variant, attributesVariant, activeGalleryImage, updateActiveGalleryImage] = useSubscribeOnProductVariations(variants, product.attributes, product.images);
+    const [putProductInCart, productIsAlreadyInCart] = useSubscribeProductOnCart(variant, product);
 
     return <>
         <Head>
@@ -43,7 +45,7 @@ export default function Catalog({topCategories, childTopCategoriesList, category
                         </div>
 
                         <div className="product__description">
-                            {product.short_description.replace(/(<([^>]+)>)/gi, "")}
+                            {removeHTML(product.short_description)}
                         </div>
 
                         <VariantsList variants={attributesVariant}/>
@@ -53,7 +55,7 @@ export default function Catalog({topCategories, childTopCategoriesList, category
                         </div>
 
                         <div className="product__tabs">
-                            <Button title="Добавить в корзину" state="active"/>
+                            <Button clickAction={putProductInCart} title={productIsAlreadyInCart() ? "Товар добавлен в корзину" : "Добавить в корзину"} state={productIsAlreadyInCart() ? "disable": "active"}/>
                             <div className="like-button">
                                 <input className="like-button__input" type="checkbox"/>
                                 <div className="like-button__svg">

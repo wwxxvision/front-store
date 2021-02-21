@@ -84,3 +84,21 @@ export function getImageSrcById(id, images) {
 
     return image.src;
 }
+
+export function calculateTotal(products) {
+    let total = 0;
+
+    products.forEach(product => total += Number(product.price));
+
+    return total;
+}
+
+export  function getTitleByStockStatus(stockStatus) {
+    if (stockStatus === "instock") {
+        return 'в наличии';
+    }
+
+    else if (stockStatus === 'outstock') {
+        return 'нет в наличии';
+    }
+}
