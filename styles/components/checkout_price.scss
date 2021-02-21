@@ -1,4 +1,6 @@
 .checkout-price {
+  position: sticky;
+  top: $header_height + 10px;
   @include box(447px, auto);
   padding: 30px;
   background-color: color("window_color");

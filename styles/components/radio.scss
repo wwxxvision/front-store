@@ -1,0 +1,59 @@
+@use "sass:map";
+
+.radio {
+  .radio__label {
+    cursor: pointer;
+    align-items: center;
+    display: flex;
+    span {
+      display: inline-block;
+      margin-left: 8px;
+      @include font('monserat-500', "sm", "main_text_color", 17px);
+    }
+    .radio__area {
+      position: relative;
+      width: 20px;
+      height: 20px;
+      min-width: 20px;
+      min-height: 20px;
+      border: 1px solid color('second_text_color');
+      border-radius: 50%;
+      input:checked {
+        +.radio__checked {
+          background: color('orange');
+          height: calc(100% - 9px);
+          width: calc(100% - 9px);
+          position: absolute;
+          transform: translate(-50%, -50%);
+          border-radius: 50%;
+          top: 50%;
+          left: 50%;
+        }
+
+      }
+
+      input {
+        height: 100%;
+        width: 100%;
+        z-index: 1;
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity: 0;
+      }
+    }
+  }
+
+  .input__errors {
+    margin-bottom: 10px;
+    .input__error {
+      @include font('monserat-500', "extraSm", "notify_error_color", 17px);
+    }
+
+    &+.radio__label {
+      span {
+        color: color('notify_error_color');
+      }
+    }
+  }
+}

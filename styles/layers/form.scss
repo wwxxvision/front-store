@@ -3,13 +3,24 @@
     @include font('monserat-600', "extraMed", "main_text_color", 18px);
     margin-top: 60px;
   }
+  .form__group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 20px;
 
+    &.form__group_columns-3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
   .form__row {
     margin-top: 35px;
-
+    .form__errors {
+      @include font('monserat-500', 'sm', 'notify_error_color' ,14px);
+      margin-top: 5px;
+    }
     .form__line {
       display: flex;
-      .checkbox {
+      .radio {
         &:not(:first-child) {
           margin-left: 40px;
         }

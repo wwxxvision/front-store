@@ -11,6 +11,9 @@ import ColorPicker from "./colorPicker";
 import ImageGallery from "./imageGallery";
 import ProductCart from "./productCart";
 import CheckoutTotalWidget from "./checkoutTotalWidget";
+import Input from "./input";
+import OrderForm from "./orderForm";
+import Radio from "./radio";
 
 
 export  {
@@ -26,5 +29,8 @@ export  {
     ColorPicker,
     ImageGallery,
     ProductCart,
-    CheckoutTotalWidget
+    CheckoutTotalWidget,
+    Input,
+    Radio,
+    OrderForm
 }
