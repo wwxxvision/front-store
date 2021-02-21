@@ -1,8 +1,10 @@
 import {Count} from "../client/utils";
 import {calculateTotal} from "../client/shop/functions";
+
 import {Button} from "./index";
 
-export default function CheckoutTotalWidget({products}) {
+
+export default function CheckoutTotalWidget({products, cartIsValide}) {
     return <div className="checkout-price">
         <h2 className="checkout-price__title">Ваш заказ</h2>
         <div className="checkout-price__positions-list">
@@ -16,6 +18,6 @@ export default function CheckoutTotalWidget({products}) {
             <div className="name">Итого</div>
             <div className="price">{calculateTotal(products)} руб</div>
         </div>
-        <Button title="Оформить заказ" state="active" />
+        <Button title="Оформить заказ" state={cartIsValide ? "active" : "disable"} />
     </div>
 }

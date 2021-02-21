@@ -174,7 +174,18 @@ export function useSubscribeOnCart() {
     useEffect(() => {
         setCart(AppStore.state.cart);
         updateIsLoading(false);
-    }, [AppStore.state.cart])
+    }, [AppStore.state.cart]);
 
-    return [cart, isLoading]
+    const deleteProductFromCart = (id) => {
+        let cartWithoutProduct = cart.filter(cartItem => cartItem.variantID !== id);
+
+        AppStore.dispatch({
+            type: 'UPDATE_CART',
+            cart: cartWithoutProduct
+        });
+
+        localForage.setItem('cart', cartWithoutProduct);
+    }
+
+    return [cart, deleteProductFromCart, isLoading]
 }

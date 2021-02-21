@@ -7,7 +7,7 @@ function getTopCategoryChildren(childTopCategoriesList, parentID) {
     return childTopCategoriesList.filter(childTopCategory => childTopCategory.parent == parentID);
 }
 
-export default function Header({topCategories, childTopCategoriesList}) {
+export default function Header({topCategories, childTopCategoriesList, hasItemInCart = false}) {
     const [isShownDropDown, showDropDown] = useState(false);
 
     return <header className="header">
@@ -29,7 +29,7 @@ export default function Header({topCategories, childTopCategoriesList}) {
                                 </a>
                             </Link>
                             {!Empty(childCategories) && isShownDropDown &&
-                                <DropDown childTopCategoriesList={childCategories}/>
+                            <DropDown childTopCategoriesList={childCategories}/>
                             }
                         </li>
                     )
@@ -54,17 +54,20 @@ export default function Header({topCategories, childTopCategoriesList}) {
                     </a>
                 </li>
 
-                <li className="interface-list__item">
-                    <a href="#" className="interface__link">
-                        <img height="14" width="13" alt="Избранное" src="/icons/likes.svg"/>
-                        <div className="dot"></div>
-                    </a>
-                </li>
+                {/*<li className="interface-list__item">*/}
+                {/*    <a href="#" className="interface__link">*/}
+                {/*        <img height="14" width="13" alt="Избранное" src="/icons/likes.svg"/>*/}
+                {/*        <div className="dot"></div>*/}
+                {/*    </a>*/}
+                {/*</li>*/}
 
                 <li className="interface-list__item">
-                    <a href="#" className="interface__link">
-                        <img height="14" width="13" alt="Корзина" src="/icons/cart.svg"/>
-                    </a>
+                    <Link href="/cart" as="/cart">
+                        <a className="interface__link">
+                            <img height="14" width="13" alt="Корзина" src="/icons/cart.svg"/>
+                            {hasItemInCart && <div className="dot"></div>}
+                        </a>
+                    </Link>
                 </li>
 
             </ul>

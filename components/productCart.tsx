@@ -2,7 +2,7 @@ import Image from "next/image";
 import {getTitleByStockStatus} from "../client/shop/functions";
 
 
-export default function ProductCart({product}) {
+export default function ProductCart({product, deleteProductFromCart}) {
     return <div className="product-cart">
         <div className="product-cart__thumb">
             <Image src={product.image.src} layout="responsive" height="80" width="80"  objectFit="cover" />
@@ -26,6 +26,8 @@ export default function ProductCart({product}) {
             </div>
 
         </div>
-        <div className="product-cart__remove-icon"></div>
+        <div onClick={() => deleteProductFromCart(product.variantID)} className="product-cart__remove-icon">
+            <Image src="/icons/crash.svg" height="20" width="16" />
+        </div>
     </div>
 }

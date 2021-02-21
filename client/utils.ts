@@ -13,5 +13,9 @@ export function removeHTML(str): String {
 
 
 export  function Count(arr) {
-    return arr.length;
+    if (arr instanceof Array) {
+        return arr.length;
+    }
+
+    return  0;
 }
