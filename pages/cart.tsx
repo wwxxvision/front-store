@@ -44,7 +44,7 @@ const OrderSchema = Yup.object().shape({
 });
 
 export default function Cart({topCategories, childTopCategoriesList}) {
-    const [cart, deleteProductFromCart, isLoading] = useSubscribeOnCart();
+    const [cart, deleteProductFromCart, isLoading, clearCart] = useSubscribeOnCart();
     const [isCheckout, setCheckout] = useState(false);
     const AppStore = SubscribeWithStore();
 
@@ -74,7 +74,7 @@ export default function Cart({topCategories, childTopCategoriesList}) {
             const order = await fetchMakeOrder(dataOrder);
 
             if (order.created) {
-
+                clearCart();
             }
             else {
 

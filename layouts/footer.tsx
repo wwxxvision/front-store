@@ -25,12 +25,6 @@ export default function Footer() {
                     </Link>
                 </li>
 
-                <li className="menu__item">
-                    <Link href="order-status">
-                        <a className="menu__link">Статус заказ</a>
-                    </Link>
-
-                </li>
 
                 <li className="menu__item">
                     <Link href="contacts">

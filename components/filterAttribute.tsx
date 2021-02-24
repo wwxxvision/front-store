@@ -1,4 +1,5 @@
 import {CheckBox} from "./index";
+import {colorToName} from "../client/shop/functions";
 
 
 export default function FilterAttribute({attribute, onChange}) {
@@ -12,7 +13,7 @@ export default function FilterAttribute({attribute, onChange}) {
                 <li key={term.id} className="filter-attribute__item">
                     <CheckBox
                         isActive={term.active}
-                        onChange={() => onChange(attribute.slug, term.id)} label={term.name + ` (${term.count})`}
+                        onChange={() => onChange(attribute.slug, term.id)} label={attribute.name !== 'Цвет' ? term.name : colorToName(term.name)}
                     value={term.id}/>
                 </li>
                 ))}

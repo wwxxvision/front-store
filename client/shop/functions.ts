@@ -106,6 +106,9 @@ export  function getTitleByStockStatus(stockStatus) {
     }
 }
 
+export function colorToName(name) {
+    return name.split('|')[0];
+}
 
 export function allCartItemsOutOfStock(cart) {
     return cart.some(cartItem => cartItem.isValide === false);

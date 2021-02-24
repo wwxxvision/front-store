@@ -40,7 +40,7 @@ export default function ColorPicker({options}) {
                     <svg className="color-picker__svg" height="30" width="30">
                         <circle className="svg__circle_1"
                                 fill={getColor(option)}
-                                stroke="#CACACA" strokeWidth="1" cx="15" cy="15"
+                                cx="15" cy="15"
                                 r="11"/>
                         {selected === option &&
                         <circle className="svg__circle_2" fill="none" cx="15" cy="15"

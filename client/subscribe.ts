@@ -219,5 +219,13 @@ export function useSubscribeOnCart(syncWithServer = true) {
         localForage.setItem('cart', cartWithoutProduct);
     }
 
-    return [cart, deleteProductFromCart, isLoading]
+    const clearCart = () =>  {
+        AppStore.dispatch({
+            type: 'UPDATE_CART',
+            cart: []
+        });
+        localForage.setItem('cart', [])
+    };
+
+    return [cart, deleteProductFromCart, isLoading, clearCart]
 }
