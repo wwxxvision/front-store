@@ -1,7 +1,8 @@
-import Link from 'next/link';
-import {DropDown} from "../components";
 import {Empty} from "../client/utils";
 import {SubscribeWithStore} from "../client/subscribe";
+
+import Link from 'next/link';
+import {DropDown} from "../components";
 import Image from  'next/image';
 
 function getTopCategoryChildren(childTopCategoriesList, parentID) {
@@ -14,8 +15,7 @@ export default function Header({topCategories, childTopCategoriesList}) {
 
     return <header className="header">
         <div className="header__tab-menu">
-            <div className="burger"><Image src="/icons/burger.svg" layout="responsive" objectFit="cover"/></div>
-            <div className="title">Меню</div>
+            <div onClick={() => AppStore.dispatch({type: 'TOGGLE_MENU', toggleMenu: true})} className="burger"><Image src="/icons/burger.svg" width="15" height="7" objectFit="cover"/></div>
         </div>
         <div className="header__nav">
             <ul className="menu">

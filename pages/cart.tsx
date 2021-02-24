@@ -6,14 +6,14 @@ import {
 import {Empty} from "../client/utils";
 import {useState} from 'react';
 import {allCartItemsOutOfStock, createDataOrder} from "../client/shop/functions";
-import {useSubscribeOnCart} from "../client/subscribe";
+import {useSubscribeOnCart, SubscribeWithStore} from "../client/subscribe";
 import {Formik} from 'formik';
 import * as Yup from 'yup';
 import {MESSAGES} from "../client/messages";
 
 import Head from 'next/head'
 import {Header} from "../layouts";
-import {Spinner, ProductCart, CheckoutTotalWidget, OrderForm} from "../components";
+import {Spinner, ProductCart, CheckoutTotalWidget, OrderForm, Menu} from "../components";
 import Footer from "../layouts/footer";
 
 
@@ -46,6 +46,7 @@ const OrderSchema = Yup.object().shape({
 export default function Cart({topCategories, childTopCategoriesList}) {
     const [cart, deleteProductFromCart, isLoading] = useSubscribeOnCart();
     const [isCheckout, setCheckout] = useState(false);
+    const AppStore = SubscribeWithStore();
 
     const pageTitle = isCheckout ? 'Оформление заказ' : 'Корзина';
     const btnTitle = isCheckout ? 'Купить' : 'Оформление заказ';
@@ -92,6 +93,7 @@ export default function Cart({topCategories, childTopCategoriesList}) {
                   rel="stylesheet"/>
         </Head>
         <Header topCategories={topCategories} childTopCategoriesList={childTopCategoriesList}/>
+        {AppStore.state.toggleMenu && <Menu/>}
         <div className="wrapper">
             <section className="page-cart">
                 <Formik

@@ -14,7 +14,7 @@ import CheckoutTotalWidget from "./checkoutTotalWidget";
 import Input from "./input";
 import OrderForm from "./orderForm";
 import Radio from "./radio";
-
+import Menu from "./menu";
 
 export  {
     DropDown,
@@ -32,5 +32,6 @@ export  {
     CheckoutTotalWidget,
     Input,
     Radio,
-    OrderForm
+    OrderForm,
+    Menu
 }

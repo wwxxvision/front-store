@@ -18,7 +18,7 @@ import {Empty} from "../../client/utils";
 import Head from 'next/head'
 import {Header} from "../../layouts";
 import {ProductList, FilterList} from "../../containers";
-import {BreadCrumb} from "../../components";
+import {BreadCrumb, Menu} from "../../components";
 import Footer from "../../layouts/footer";
 
 
@@ -45,11 +45,11 @@ export default function Catalog({topCategories, childTopCategoriesList, category
                       rel="stylesheet"/>
             </Head>
             <Header topCategories={topCategories} childTopCategoriesList={childTopCategoriesList}/>
-
+            {AppStore.state.toggleMenu && <Menu/>}
             <div className="wrapper">
                 <section className="page-catalog">
                     <div className="content">
-                        <BreadCrumb breadcrumb={getCrumbs(category, allCategories)} />
+                        <BreadCrumb breadcrumb={getCrumbs(category, allCategories)}/>
                         <h1 className="title">{category.name}</h1>
                         <div className="page-catalog_content">
                             <aside className="sidebar">
@@ -60,13 +60,13 @@ export default function Catalog({topCategories, childTopCategoriesList, category
 
                             <div className="catalog">
                                 {!Empty(AppStore.state.products) &&
-                                <ProductList  products={AppStore.state.products} />}
+                                <ProductList products={AppStore.state.products}/>}
                             </div>
                         </div>
                     </div>
                 </section>
             </div>
-            <Footer />
+            <Footer/>
         </>
 
     )
@@ -75,12 +75,12 @@ export default function Catalog({topCategories, childTopCategoriesList, category
 
 export async function getServerSideProps({params}) {
     const topCategories = await fetchTopCategories();
-    const childTopCategoriesList = await  fetchChildTopCategories(topCategories);
+    const childTopCategoriesList = await fetchChildTopCategories(topCategories);
     const allCategories = [...childTopCategoriesList, ...topCategories];
     const currentCategory = getCurrentCategoryBySlug(allCategories, params.slug);
     const products = await fetchProducts(currentCategory.id);
     const attributes = await fetchAttributes();
-    const attributesList = await  fetchAttributeTerms(attributes);
+    const attributesList = await fetchAttributeTerms(attributes);
 
     return {
         props: {
@@ -89,7 +89,7 @@ export async function getServerSideProps({params}) {
             category: currentCategory,
             products: products.data,
             attributesList,
-            pages:  products.pages,
+            pages: products.pages,
             allCategories,
         }
     }

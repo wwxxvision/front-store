@@ -5,7 +5,7 @@ import {
 import {getCrumbs, getImageSrcById, getParentCategory, isSale} from "../../client/shop/functions";
 import {
     useSubscribeProductOnCart,
-    useSubscribeOnProductVariations
+    useSubscribeOnProductVariations, SubscribeWithStore
 } from "../../client/subscribe";
 import fetchProduct from "../../client/fetch/fetchProduct";
 import fetchProductVariants from "../../client/fetch/fetchProductVariants";
@@ -13,16 +13,16 @@ import fetchProductVariants from "../../client/fetch/fetchProductVariants";
 import Head from 'next/head'
 import {Header} from "../../layouts";
 import {VariantsList} from "../../containers";
-import {BreadCrumb, Button, ImageGallery} from "../../components";
+import {BreadCrumb, Button, ImageGallery, Menu} from "../../components";
 import Image from 'next/image';
 import {removeHTML} from "../../client/utils";
-import {spans} from "next/dist/build/webpack/plugins/profiling-plugin";
 
 
 export default function Catalog({topCategories, childTopCategoriesList, category, product, allCategories, variants}) {
     const [variant, attributesVariant, activeGalleryImage, updateActiveGalleryImage] = useSubscribeOnProductVariations(variants, product.attributes, product.images);
     const [putProductInCart, productIsAlreadyInCart] = useSubscribeProductOnCart(variant, product);
     const variantIsOutOfStock = variant.stock_quantity == 0;
+    const AppStore = SubscribeWithStore();
 
     return <>
         <Head>
@@ -33,6 +33,7 @@ export default function Catalog({topCategories, childTopCategoriesList, category
                   rel="stylesheet"/>
         </Head>
         <Header topCategories={topCategories} childTopCategoriesList={childTopCategoriesList}/>
+        {AppStore.state.toggleMenu && <Menu/>}
         <section className="page-product">
             <div className="block">
                 <div className="wrapper">

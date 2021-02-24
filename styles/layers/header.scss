@@ -13,10 +13,9 @@
   .header__tab-menu {
     display: flex;
     align-items: center;
-    .title {
-      margin-left: 10px;
-      text-transform: uppercase;
-      @include font('monserat-600', 'extraSm', 'main_text_color', 14px);
+    cursor: pointer;
+    .burger {
+      position: relative;
     }
   }
 

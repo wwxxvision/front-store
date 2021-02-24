@@ -1,3 +1,4 @@
+import Link from 'next/link';
 
 export default function Footer() {
     return <footer className="footer">
@@ -7,23 +8,34 @@ export default function Footer() {
         <nav className="footer__nav">
             <ul className="menu">
                 <li className="menu__item">
-                    <a href="#" className="menu__link">Главная</a>
+                    <Link href="/">
+                        <a className="menu__link">Главная</a>
+                    </Link>
                 </li>
 
                 <li className="menu__item">
-                    <a href="#" className="menu__link">Мужское</a>
+                    <Link href={{pathname: '/catalog', query: {slug: "men"}}} as="/catalog/men">
+                        <a href="#" className="menu__link">Мужское</a>
+                    </Link>
                 </li>
 
                 <li className="menu__item">
-                    <a href="#" className="menu__link">Женское</a>
+                    <Link href={{pathname: '/catalog', query: {slug: "women"}}} as="/catalog/women">
+                        <a href="#" className="menu__link">Женское</a>
+                    </Link>
                 </li>
 
                 <li className="menu__item">
-                    <a href="#" className="menu__link">Новости</a>
+                    <Link href="order-status">
+                        <a className="menu__link">Статус заказ</a>
+                    </Link>
+
                 </li>
 
                 <li className="menu__item">
-                    <a href="#" className="menu__link">Контакты</a>
+                    <Link href="contacts">
+                        <a href="#" className="menu__link">Контакты</a>
+                    </Link>
                 </li>
             </ul>
         </nav>

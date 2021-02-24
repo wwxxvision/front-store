@@ -14,7 +14,8 @@ const initialState = {
         color: '',
         size: '',
     },
-    cart: []
+    cart: [],
+    toggleMenu: false
 };
 const store = createContext(initialState);
 const {Provider} = store;
@@ -25,6 +26,10 @@ const StateProvider = ({children}) => {
             case 'UPDATE_CART':
                 return {
                     ...state, cart: action.cart
+                }
+            case 'TOGGLE_MENU':
+                return {
+                    ...state, toggleMenu: action.toggleMenu
                 }
             case 'UPDATE_LOADING_STATE':
                 return {
