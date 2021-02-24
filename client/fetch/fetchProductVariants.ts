@@ -4,10 +4,10 @@ export default async function fetchProductVariants(id) {
     try {
         let url = "";
         if (process.env.APP_URL) {
-            url = process.env.APP_URL  + `/api/get/model?endpoint=products/${id}/variations&method=GetList&pagination=yes`;
+            url = process.env.APP_URL  + `/api/get/model?endpoint=products/${id}/variations&method=GetList`;
         }
         else {
-            url = `/api/get/model?endpoint=products/${id}/variations&method=GetList&pagination=yes`;
+            url = `/api/get/model?endpoint=products/${id}/variations&method=GetList`;
         }
 
 

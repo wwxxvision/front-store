@@ -16,11 +16,13 @@ import {VariantsList} from "../../containers";
 import {BreadCrumb, Button, ImageGallery} from "../../components";
 import Image from 'next/image';
 import {removeHTML} from "../../client/utils";
+import {spans} from "next/dist/build/webpack/plugins/profiling-plugin";
 
 
 export default function Catalog({topCategories, childTopCategoriesList, category, product, allCategories, variants}) {
     const [variant, attributesVariant, activeGalleryImage, updateActiveGalleryImage] = useSubscribeOnProductVariations(variants, product.attributes, product.images);
     const [putProductInCart, productIsAlreadyInCart] = useSubscribeProductOnCart(variant, product);
+    const variantIsOutOfStock = variant.stock_quantity == 0;
 
     return <>
         <Head>
@@ -48,6 +50,9 @@ export default function Catalog({topCategories, childTopCategoriesList, category
                             {removeHTML(product.short_description)}
                         </div>
 
+                        {variantIsOutOfStock &&
+                            <span className="product__status product__status_outofstock">Выбранного размера нет в наличии</span>
+                        }
                         <VariantsList variants={attributesVariant}/>
 
                         <div className="product__gallery">
@@ -55,7 +60,7 @@ export default function Catalog({topCategories, childTopCategoriesList, category
                         </div>
 
                         <div className="product__tabs">
-                            <Button clickAction={putProductInCart} title={productIsAlreadyInCart() ? "Товар добавлен в корзину" : "Добавить в корзину"} state={productIsAlreadyInCart() ? "disable": "active"}/>
+                            <Button clickAction={putProductInCart} title={productIsAlreadyInCart() ? "Товар добавлен в корзину" : "Добавить в корзину"} state={productIsAlreadyInCart() || variantIsOutOfStock ? "disable": "active"}/>
                             {/*<div className="like-button">*/}
                             {/*    <input className="like-button__input" type="checkbox"/>*/}
                             {/*    <div className="like-button__svg">*/}

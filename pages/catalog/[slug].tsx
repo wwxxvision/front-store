@@ -7,14 +7,19 @@ import {
     fetchTopCategories
 } from "../../client/fetch";
 import {getCurrentCategoryBySlug, getCrumbs} from "../../client/shop/functions";
-import { SubscribeWithStore, SubscribeOnProductsFilter, SubscribeOnProductsPagPage } from "../../client/subscribe"
+import {
+    SubscribeWithStore,
+    SubscribeOnProductsFilter,
+    SubscribeOnProductsPagPage,
+    useSubscribeOnCart
+} from "../../client/subscribe"
 import {Empty} from "../../client/utils";
 
 import Head from 'next/head'
 import {Header} from "../../layouts";
 import {ProductList, FilterList} from "../../containers";
 import {BreadCrumb} from "../../components";
-
+import Footer from "../../layouts/footer";
 
 
 export default function Catalog({topCategories, childTopCategoriesList, category, products, attributesList, pages, allCategories}) {
@@ -28,6 +33,7 @@ export default function Catalog({topCategories, childTopCategoriesList, category
 
     SubscribeOnProductsFilter(AppStore.state, AppStore.dispatch);
     SubscribeOnProductsPagPage(AppStore.state, AppStore.dispatch);
+    useSubscribeOnCart(false);
 
     return (
         <>
@@ -60,6 +66,7 @@ export default function Catalog({topCategories, childTopCategoriesList, category
                     </div>
                 </section>
             </div>
+            <Footer />
         </>
 
     )

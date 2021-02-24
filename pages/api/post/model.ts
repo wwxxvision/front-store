@@ -1,11 +1,7 @@
 import {BaseContoller} from "../../../server/controllers/BaseContoller";
 
 export default (req, res) => {
-    const method = req.query.method,
-        type = req.query.type;
-
-
     const controller = new BaseContoller(req, res);
 
-    controller[method]();
+    controller.Post();
 }

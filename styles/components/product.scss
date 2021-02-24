@@ -8,6 +8,13 @@
     @include font('monserat-500', "extraBig", "main_text_color", 140%);
   }
 
+  .product__status {
+    margin-top: 35px;
+    &.product__status_outofstock {
+      @include font('monserat-500', "sm", "notify_error_color", 140%);
+    }
+  }
+
   .product__price {
     margin-top: 15px;
     .new {

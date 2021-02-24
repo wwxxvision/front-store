@@ -1,9 +1,10 @@
 import {useContext, useEffect, useState} from "react";
 import {store} from "./store";
 import {Empty} from "./utils";
-import {getFilterProductsQuery} from "./shop/functions";
+import {getFilterProductsQuery, synCartItemsWithServer} from "./shop/functions";
 import {fetchProducts} from "./fetch";
 import localForage from "localforage";
+
 
 export function SubscribeWithStore() {
     const AppStore = useContext(store);
@@ -22,11 +23,12 @@ export function SubscribeOnProductsFilter(state, dispatch) {
 
             dispatch({type: "UPDATE_CATALOG_PRODUCTS", products: products.data});
             dispatch({type: "UPDATE_LOADING_STATE", loading: {key: 'acceptFilterButton', value: false}});
-            dispatch({type: "UPDATE_PAG_PAGES", pages: products.pages});
             dispatch({type: "UPDATE_PAG_PAGE", page: 1});
+            dispatch({type: "UPDATE_PAG_PAGES", pages: Number(products.pages)});
         }
     }, [state.filters]);
 }
+
 
 export function SubscribeOnProductsPagPage(state, dispatch) {
     useEffect(async () => {
@@ -154,26 +156,56 @@ export function useSubscribeProductOnCart(variant, product) {
     return [putProductInCart, productIsAlreadyInCart];
 }
 
-export function useSubscribeOnCart() {
+export function useSubscribeOnCart(syncWithServer = true) {
     const AppStore = SubscribeWithStore();
 
     const [cart, setCart] = useState([]);
     const [isLoading, updateIsLoading] = useState(true);
 
-    useEffect(async () => {
+    const putProductInCart = async (product, variant) => {
+        const preparedProductDataForCart = {
+            ...variant,
+            id: product.id,
+            name: product.name,
+            variantID: variant.id,
+            quantity: 1,
+            price: Number(variant.price),
+            availableQuantity: variant.stock_quantity,
+            isValide: 1 <= variant.stock_quantity,
+        }
+
         let cart = await localForage.getItem('cart') ?? [];
+        let cartWithoutPutProduct = cart.filter(cartItem => cartItem.variantID != preparedProductDataForCart.variantID);
+
+        cartWithoutPutProduct = [...cartWithoutPutProduct, preparedProductDataForCart];
 
         AppStore.dispatch({
             type: 'UPDATE_CART',
-            cart
+            cart: cartWithoutPutProduct
         });
+
+        localForage.setItem('cart', cartWithoutPutProduct);
+
+    }
+
+    useEffect(async () => {
+        let cart = await localForage.getItem('cart') ?? [];
+        if (syncWithServer) {
+            await synCartItemsWithServer(cart, putProductInCart);
+        } else {
+            AppStore.dispatch({
+                type: 'UPDATE_CART',
+                cart
+            });
+        }
+
+        updateIsLoading(false);
 
     }, []);
 
 
-    useEffect(() => {
+    useEffect(async () => {
         setCart(AppStore.state.cart);
-        updateIsLoading(false);
     }, [AppStore.state.cart]);
 
     const deleteProductFromCart = (id) => {

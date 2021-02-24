@@ -57,10 +57,19 @@ export class BaseContoller {
         }
     }
 
+    public async Post() {
+        try {
+            const result = await ApiConnection.post(this.endpoint, this.req.body);
+            return this.SetResponse({created: true, data: result.data}, 'ok');
+        } catch (err) {
+            return this.SetResponse({created: false}, 'ok');
+        }
+    }
+
 
     public async GetByID(id) {
         try {
-            const result = await ApiConnection.get(this.endpoint, {...this.query});
+            const result = await ApiConnection.post(this.endpoint, {...this.query});
             return result.data;
         } catch (err) {
 

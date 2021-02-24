@@ -1,18 +1,20 @@
 import Link from 'next/link';
 import {DropDown} from "../components";
-import {useState} from "react";
 import {Empty} from "../client/utils";
+import {SubscribeWithStore} from "../client/subscribe";
+import Image from  'next/image';
 
 function getTopCategoryChildren(childTopCategoriesList, parentID) {
     return childTopCategoriesList.filter(childTopCategory => childTopCategory.parent == parentID);
 }
 
-export default function Header({topCategories, childTopCategoriesList, hasItemInCart = false}) {
-    const [isShownDropDown, showDropDown] = useState(false);
+export default function Header({topCategories, childTopCategoriesList}) {
+    const AppStore = SubscribeWithStore();
+    const hasItemInCart = !Empty(AppStore.state.cart);
 
     return <header className="header">
         <div className="header__tab-menu">
-            <div className="burger"></div>
+            <div className="burger"><Image src="/icons/burger.svg" layout="responsive" objectFit="cover"/></div>
             <div className="title">Меню</div>
         </div>
         <div className="header__nav">
@@ -21,14 +23,14 @@ export default function Header({topCategories, childTopCategoriesList, hasItemIn
                     const childCategories = getTopCategoryChildren(childTopCategoriesList, topCategory.id);
                     const link = `/catalog/${topCategory.slug}`;
                     return (
-                        <li onMouseEnter={() => !isShownDropDown && !Empty(childCategories) && showDropDown(true)}
+                        <li
                             key={topCategory.id} className="menu__item">
                             <Link href={{pathname: '/catalog', query: {slug: topCategory.slug}}} as={link}>
                                 <a className="menu__link menu__link_state-active">
                                     {topCategory.name}
                                 </a>
                             </Link>
-                            {!Empty(childCategories) && isShownDropDown &&
+                            {!Empty(childCategories) &&
                             <DropDown childTopCategoriesList={childCategories}/>
                             }
                         </li>

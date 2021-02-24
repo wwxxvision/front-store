@@ -4,6 +4,7 @@ import {CONFIG} from "../client/config";
 
 import {ProductCard, Spinner, Button} from "../components";
 import {SubscribeWithStore} from "../client/subscribe";
+import App from "next/app";
 
 export default function ProductList({products}) {
     const AppStore = SubscribeWithStore();
@@ -22,7 +23,7 @@ export default function ProductList({products}) {
     }
 
     useEffect(() => {
-        updateHasMore(AppStore.state.pages > 1);
+        updateHasMore(AppStore.state.pages > 1 && AppStore.state.page < AppStore.state.pages);
     }, [AppStore.state.pages]);
 
 

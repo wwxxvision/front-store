@@ -50,6 +50,12 @@
     .price-and-status {
       .price {
         @include font("bold", "extraMed", "price_color", 140%);
+
+        .old-price {
+          opacity: 0.5;
+          text-decoration: line-through;
+          margin-right: 10px;
+        }
       }
 
       .status {
@@ -58,6 +64,11 @@
         &.status_type-preorder {
           margin-left: 15px;
           color: color('orange');
+        }
+
+        &.status_type-outofstock {
+          margin-left: 15px;
+          color: color('notify_error_color');
         }
       }
     }

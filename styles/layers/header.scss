@@ -12,6 +12,12 @@
   box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.1);
   .header__tab-menu {
     display: flex;
+    align-items: center;
+    .title {
+      margin-left: 10px;
+      text-transform: uppercase;
+      @include font('monserat-600', 'extraSm', 'main_text_color', 14px);
+    }
   }
 
   .header__nav {
@@ -19,6 +25,11 @@
     .menu {
       display: flex;
       .menu__item {
+        &:hover {
+          .dropdown {
+            display: block;
+          }
+        }
         &:not(:first-child) {
           margin-left: 20px;
         }

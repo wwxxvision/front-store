@@ -1,11 +1,13 @@
 import Image from "next/image";
-import {getTitleByStockStatus} from "../client/shop/functions";
 
+import {getTitleByStockStatus, isSale} from "../client/shop/functions";
+
+const classNames = require('classnames');
 
 export default function ProductCart({product, deleteProductFromCart}) {
     return <div className="product-cart">
         <div className="product-cart__thumb">
-            <Image src={product.image.src} layout="responsive" height="80" width="80"  objectFit="cover" />
+            <Image src={product.image.src} layout="responsive" height="80" width="80" objectFit="cover"/>
         </div>
         <div className="product-cart__info">
             <h3 className="name">
@@ -21,13 +23,27 @@ export default function ProductCart({product, deleteProductFromCart}) {
             </div>
 
             <div className="price-and-status">
-                <span className="price">{product.price} руб</span>
-                <span className="status status_type-preorder">{getTitleByStockStatus(product.stock_status)}</span>
+                <span className="price">
+                    {isSale(product.sale_price) &&
+                        <span className="old-price">
+                            {product.regular_price} руб
+                        </span>
+                    }
+
+                    <span className="new-price">
+                        {product.price} руб
+                    </span>
+
+                </span>
+                <span className={classNames(['status', {
+                    'status_type-preorder': product.stock_status === 'instock',
+                    'status_type-outofstock': product.stock_status === 'outofstock'
+                }])}>{getTitleByStockStatus(product.stock_status)}</span>
             </div>
 
         </div>
         <div onClick={() => deleteProductFromCart(product.variantID)} className="product-cart__remove-icon">
-            <Image src="/icons/crash.svg" height="20" width="16" />
+            <Image src="/icons/crash.svg" height="20" width="16"/>
         </div>
     </div>
 }

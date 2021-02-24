@@ -61,5 +61,14 @@ export const API = {
                 "Content-Type": "application/json"
             }
         }
+    },
+    CREATE_ORDER: {
+        url: "/api/post/model?endpoint=orders",
+        options: {
+            method: "POST",
+            headers:  {
+                "Content-Type": "application/json"
+            }
+        }
     }
 }

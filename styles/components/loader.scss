@@ -1,0 +1,13 @@
+.loader {
+  display: flex;
+  align-items: center;
+  @include font('monserat-500', 'smMed', 'orange', 14px);
+  left: 0;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  z-index: 2;
+  justify-content: center;
+  background-color: color('white');
+}

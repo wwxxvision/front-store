@@ -1,11 +1,12 @@
 .dropdown {
-  height: calc(100vh - #{$header_height});
+  height: calc(100vh - #{$header_height - 25px});
   width: 100%;
   background-color: color("white");
   position: absolute;
   left: 0;
-  top: $header_height;
+  top: $header_height - 25px;
   padding: 30px;
+  display: none;
   .dropdown__wrapper {
     display: grid;
     grid-template-columns: repeat(3, 1fr);

@@ -1,3 +1,6 @@
+import fetchProduct from "../fetch/fetchProduct";
+import fetchProductVariants from "../fetch/fetchProductVariants";
+
 export function getCurrentCategoryBySlug(allCategories, slug) {
     return allCategories.find(_category => _category.slug === slug);
 }
@@ -98,7 +101,52 @@ export  function getTitleByStockStatus(stockStatus) {
         return 'в наличии';
     }
 
-    else if (stockStatus === 'outstock') {
+    else if (stockStatus === 'outofstock') {
         return 'нет в наличии';
     }
+}
+
+
+export function allCartItemsOutOfStock(cart) {
+    return cart.some(cartItem => cartItem.isValide === false);
+}
+
+export async function synCartItemsWithServer(cart, putProductInCart) {
+    for await (let cartItem of cart) {
+        let productFromServer = await fetchProduct(cartItem.id);
+        let productFromServerVariants = await  fetchProductVariants(cartItem.id);
+
+        let currentVariant = productFromServerVariants.find(variant => variant.id === cartItem.variantID);
+
+        await putProductInCart(productFromServer[0], currentVariant);
+    }
+}
+
+export function createDataOrder(cart, formValues) {
+    let dataOrder = {
+        line_items: [],
+        payment_method: formValues.paymentmethod,
+        payment_method_title: formValues.paymentmethod,
+        set_paid: false,
+        status: "processing",
+        billing: {
+            first_name: formValues.name,
+            last_name: formValues.secondName,
+            address_1: `${formValues.street} ${formValues.house} ${formValues.appartment}`,
+            city: "Ижевск",
+            state: "Удмуртская республика",
+            postcode: "22222",
+            country: "RU",
+            email: "wwxxrjct@gmail.com",
+            phone: formValues.phone
+        }
+    };
+
+    cart.forEach(cartItem =>  {
+        dataOrder.line_items = [...dataOrder.line_items, { product_id: cartItem.id,
+            variation_id: cartItem.variantID,
+        }]
+    })
+
+    return dataOrder;
 }

@@ -3,6 +3,7 @@ import fetchChildTopCategories from "./fetchChildTopCategories";
 import fetchProducts from "./fetchProducts";
 import fetchAttributes from "./fetchAttributes";
 import fetchAttributeTerms from "./fetchAttributeTerms";
+import fetchMakeOrder from "./fetchMakeOrder";
 
 export {
     fetchTopCategories,
@@ -10,4 +11,5 @@ export {
     fetchProducts,
     fetchAttributes,
     fetchAttributeTerms,
+    fetchMakeOrder
 }

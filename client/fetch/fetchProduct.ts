@@ -7,7 +7,7 @@ export default async function FetchProduct(id) {
             url = process.env.APP_URL  + API.CATALOG_PRODUCTS.url + `&include=${id}`;
         }
         else {
-            url = API.CATALOG_PRODUCTS.url  + API.CATALOG_PRODUCTS.url + `&include=${id}`;
+            url = API.CATALOG_PRODUCTS.url  + `&include=${id}`;
         }
 
 
