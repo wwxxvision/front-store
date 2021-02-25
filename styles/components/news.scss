@@ -7,6 +7,15 @@
       position: relative;
       height: 100%;
       width: 100%;
+
+      .text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 2;
+        @include font('monserat-500', 'big', 'white', 14px);
+      }
     }
   }
 }

@@ -4,8 +4,6 @@
   box-sizing: border-box;
 }
 
-
-
 @import './common';
 @import "./components/product_cart";
 @import "./components/counter";
@@ -25,6 +23,7 @@
 @import "./components/loader";
 @import "./components/menu";
 @import "./components/news";
+@import "./components/modal";
 
 @import "./layers/content";
 @import "./layers/cart_page";
@@ -36,3 +35,4 @@
 @import "./layers/catalog";
 @import "./layers/sidebar";
 @import "./layers/product_page";
+@import "./layers/overlay";

@@ -13,8 +13,9 @@ import {MESSAGES} from "../client/messages";
 
 import Head from 'next/head'
 import {Header} from "../layouts";
-import {Spinner, ProductCart, CheckoutTotalWidget, OrderForm, Menu} from "../components";
+import {Spinner, ProductCart, CheckoutTotalWidget, OrderForm, Menu, Modal} from "../components";
 import Footer from "../layouts/footer";
+import {useRouter} from "next/router";
 
 
 const OrderSchema = Yup.object().shape({
@@ -46,10 +47,12 @@ const OrderSchema = Yup.object().shape({
 export default function Cart({topCategories, childTopCategoriesList}) {
     const [cart, deleteProductFromCart, isLoading, clearCart] = useSubscribeOnCart();
     const [isCheckout, setCheckout] = useState(false);
+    const [pendingOrderResult, setPendingOrderResult] = useState(false);
     const AppStore = SubscribeWithStore();
+    const router = useRouter();
 
     const pageTitle = isCheckout ? 'Оформление заказ' : 'Корзина';
-    const btnTitle = isCheckout ? 'Купить' : 'Оформление заказ';
+    const btnTitle = isCheckout ? 'Купить' : 'Оформление заказа';
     const cartIsValide = !Empty(cart) && !allCartItemsOutOfStock(cart);
 
     const checkout = () => {
@@ -70,13 +73,17 @@ export default function Cart({topCategories, childTopCategoriesList}) {
 
     const submitHandler = async (values, actions) => {
         if (cartIsValide) {
+            setPendingOrderResult(true);
+
             const dataOrder = createDataOrder(cart, values);
             const order = await fetchMakeOrder(dataOrder);
 
-            if (order.created) {
+            setPendingOrderResult(false);
+
+            if (order.data.created) {
                 clearCart();
-            }
-            else {
+                router.push('/order_status', {id: order.data.data.id})
+            } else {
 
             }
         }
@@ -144,6 +151,7 @@ export default function Cart({topCategories, childTopCategoriesList}) {
                                 {!isLoading &&
                                 <>
                                     <CheckoutTotalWidget btnTitle={btnTitle}
+                                                         pending={pendingOrderResult}
                                                          clickAction={!isCheckout ? checkout : () => makeOrder(handleSubmit)}
                                                          cartIsValide={cartIsValide} products={cart}/>
                                     <div className="block notify">
@@ -164,7 +172,7 @@ export default function Cart({topCategories, childTopCategoriesList}) {
                 </Formik>
             </section>
         </div>
-        <Footer />
+        <Footer/>
     </>
 }
 

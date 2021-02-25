@@ -1,45 +1,18 @@
-import {useState} from 'react';
-import Modal from 'react-modal';
-import {SubscribeWithStore} from "../client/subscribe";
+import {Overlay} from "../layouts";
 
-const customStyles = {
-    content : {
-        top                   : '50%',
-        left                  : '50%',
-        right                 : 'auto',
-        bottom                : 'auto',
-        marginRight           : '-50%',
-        transform             : 'translate(-50%, -50%)'
-    }
-};
 
-function Modal(){
-    const AppStore = SubscribeWithStore();
+export default function Modal({title, children}){
 
-    const [modalIsOpen,setIsOpen] = useState(false);
-    function openModal() {
-        setIsOpen(true);
-    }
-
-    function afterOpenModal() {
-    }
-
-    function closeModal(){
-        setIsOpen(false);
-    }
-
-    return (
-        <div>
-            <button onClick={openModal}>Open Modal</button>
-            <Modal
-                isOpen={modalIsOpen}
-                onAfterOpen={afterOpenModal}
-                onRequestClose={closeModal}
-                style={customStyles}
-                contentLabel="Modal"
-            >
-                test
-            </Modal>
+    return <Overlay>
+        <div className="modal">
+            <div className="modal__wrapper">
+                <div className="modal__title">
+                    {title}
+                </div>
+                <div className="modal__body">
+                    {children}
+                </div>
+            </div>
         </div>
-    );
+    </Overlay>
 }

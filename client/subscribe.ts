@@ -102,7 +102,7 @@ export function useSubscribeOnProductVariations(variants, attributes, images) {
     return [variant, attributesVariant, activeGalleryImage, updateActiveGalleryImage];
 }
 
-export function useSubscribeProductOnCart(variant, product) {
+export function useSubscribeProductOnCart(variant, product, callback) {
     const AppStore = SubscribeWithStore();
 
     useEffect(async () => {
@@ -136,24 +136,23 @@ export function useSubscribeProductOnCart(variant, product) {
                 isValide: 1 <= variant.stock_quantity,
             }
 
-            if (preparedProductDataForCart.isValide) {
-                let cart = await localForage.getItem('cart') ?? [];
-                let cartWithoutPutProduct = cart.filter(cartItem => cartItem.variantID != preparedProductDataForCart.variantID);
+            let cart = await localForage.getItem('cart') ?? [];
+            let cartWithoutPutProduct = cart.filter(cartItem => cartItem.variantID != preparedProductDataForCart.variantID);
 
-                cartWithoutPutProduct = [...cartWithoutPutProduct, preparedProductDataForCart];
+            cartWithoutPutProduct = [...cartWithoutPutProduct, preparedProductDataForCart];
 
-                AppStore.dispatch({
-                    type: 'UPDATE_CART',
-                    cart: cartWithoutPutProduct
-                });
+            AppStore.dispatch({
+                type: 'UPDATE_CART',
+                cart: cartWithoutPutProduct
+            });
+            callback();
+            localForage.setItem('cart', cartWithoutPutProduct);
 
-                localForage.setItem('cart', cartWithoutPutProduct);
-            }
         }
     }
 
 
-    return [putProductInCart, productIsAlreadyInCart];
+    return [putProductInCart, productIsAlreadyInCart, AppStore.state.cart];
 }
 
 export function useSubscribeOnCart(syncWithServer = true) {
@@ -219,10 +218,9 @@ export function useSubscribeOnCart(syncWithServer = true) {
         localForage.setItem('cart', cartWithoutProduct);
     }
 
-    const clearCart = () =>  {
+    const clearCart = () => {
         AppStore.dispatch({
-            type: 'UPDATE_CART',
-            cart: []
+            type: 'CLEAR_CART'
         });
         localForage.setItem('cart', [])
     };

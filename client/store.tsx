@@ -27,6 +27,10 @@ const StateProvider = ({children}) => {
                 return {
                     ...state, cart: action.cart
                 }
+            case 'CLEAR_CART':
+                return  {
+                    ...state, cart: []
+                }
             case 'TOGGLE_MENU':
                 return {
                     ...state, toggleMenu: action.toggleMenu

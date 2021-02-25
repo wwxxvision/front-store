@@ -1,0 +1,22 @@
+.modal {
+  background-color: color('white');
+  min-width: 500px;
+  z-index: 999;
+  .modal__wrapper {
+    padding: 30px;
+
+    .modal__title {
+      @include font('monserat-600', 'smMed', 'main_text_color', 140%);
+    }
+
+    .modal__buttons {
+      margin-top: 15px;
+      .close {
+        cursor: pointer;
+        text-align: center;
+        @include font('monserat-500', 'sm', 'main_text_color', 14px);
+        margin-top: 20px;
+      }
+    }
+  }
+}

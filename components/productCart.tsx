@@ -4,7 +4,7 @@ import {getTitleByStockStatus, isSale} from "../client/shop/functions";
 
 const classNames = require('classnames');
 
-export default function ProductCart({product, deleteProductFromCart}) {
+export default function ProductCart({product, deleteProductFromCart, canRemove = true}) {
     return <div className="product-cart">
         <div className="product-cart__thumb">
             <Image src={product.image.src} layout="responsive" height="80" width="80" objectFit="cover"/>
@@ -25,7 +25,7 @@ export default function ProductCart({product, deleteProductFromCart}) {
             <div className="price-and-status">
                 <span className="price">
                     {isSale(product.sale_price) &&
-                        <span className="old-price">
+                    <span className="old-price">
                             {product.regular_price} руб
                         </span>
                     }
@@ -42,8 +42,10 @@ export default function ProductCart({product, deleteProductFromCart}) {
             </div>
 
         </div>
-        <div onClick={() => deleteProductFromCart(product.variantID)} className="product-cart__remove-icon">
-            <Image src="/icons/crash.svg" height="20" width="16"/>
-        </div>
+        {canRemove &&
+            <div onClick={() => deleteProductFromCart(product.variantID)} className="product-cart__remove-icon">
+                <Image src="/icons/crash.svg" height="20" width="16"/>
+            </div>
+        }
     </div>
 }

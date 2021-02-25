@@ -9,20 +9,25 @@ import {
 } from "../../client/subscribe";
 import fetchProduct from "../../client/fetch/fetchProduct";
 import fetchProductVariants from "../../client/fetch/fetchProductVariants";
+import {useRouter} from "next/router";
+import {useState} from "react";
 
 import Head from 'next/head'
 import {Header} from "../../layouts";
 import {VariantsList} from "../../containers";
-import {BreadCrumb, Button, ImageGallery, Menu} from "../../components";
+import {BreadCrumb, Button, ImageGallery, Menu, Modal, ProductCart} from "../../components";
 import Image from 'next/image';
 import {removeHTML} from "../../client/utils";
 
 
 export default function Catalog({topCategories, childTopCategoriesList, category, product, allCategories, variants}) {
+    const [productAdded, setProductAdded] = useState(false);
     const [variant, attributesVariant, activeGalleryImage, updateActiveGalleryImage] = useSubscribeOnProductVariations(variants, product.attributes, product.images);
-    const [putProductInCart, productIsAlreadyInCart] = useSubscribeProductOnCart(variant, product);
-    const variantIsOutOfStock = variant.stock_quantity == 0;
+    const [putProductInCart, productIsAlreadyInCart] = useSubscribeProductOnCart(variant, product, () => setProductAdded(true));
+    const variantIsOutOfStock = variant.stock_quantity == 0 || variant.stock_quantity < 0;
     const AppStore = SubscribeWithStore();
+    const router = useRouter();
+
 
     return <>
         <Head>
@@ -34,6 +39,18 @@ export default function Catalog({topCategories, childTopCategoriesList, category
         </Head>
         <Header topCategories={topCategories} childTopCategoriesList={childTopCategoriesList}/>
         {AppStore.state.toggleMenu && <Menu/>}
+        {productAdded &&
+            <Modal title="Товар добавлен в корзину">
+                <ProductCart canRemove={false} product={variant}/>
+                <div className="modal__buttons">
+                    <div>
+                        <Button clickAction={() => router.push('/cart')} state="active" title="В корзину"/>
+                    </div>
+
+                    <div onClick={() => setProductAdded(false)} className="close">Закрыть</div>
+                </div>
+            </Modal>
+        }
         <section className="page-product">
             <div className="block">
                 <div className="wrapper">
@@ -52,16 +69,20 @@ export default function Catalog({topCategories, childTopCategoriesList, category
                         </div>
 
                         {variantIsOutOfStock &&
-                            <span className="product__status product__status_outofstock">Выбранного размера нет в наличии</span>
+                        <span
+                            className="product__status product__status_outofstock">Выбранного размера нет в наличии</span>
                         }
                         <VariantsList variants={attributesVariant}/>
 
                         <div className="product__gallery">
-                            <ImageGallery  activeGalleryImage={activeGalleryImage} updateActiveGalleryImage={updateActiveGalleryImage} images={product.images} />
+                            <ImageGallery activeGalleryImage={activeGalleryImage}
+                                          updateActiveGalleryImage={updateActiveGalleryImage} images={product.images}/>
                         </div>
 
                         <div className="product__tabs">
-                            <Button clickAction={putProductInCart} title={productIsAlreadyInCart() ? "Товар добавлен в корзину" : "Добавить в корзину"} state={productIsAlreadyInCart() || variantIsOutOfStock ? "disable": "active"}/>
+                            <Button clickAction={putProductInCart}
+                                    title={productIsAlreadyInCart() ? "Товар добавлен в корзину" : "Добавить в корзину"}
+                                    state={productIsAlreadyInCart() || variantIsOutOfStock ? "disable" : "active"}/>
                             {/*<div className="like-button">*/}
                             {/*    <input className="like-button__input" type="checkbox"/>*/}
                             {/*    <div className="like-button__svg">*/}
@@ -80,7 +101,7 @@ export default function Catalog({topCategories, childTopCategoriesList, category
                 </div>
             </div>
             <div className="block active-slide">
-                <Image src={getImageSrcById(activeGalleryImage, product.images)} layout="fill" objectFit="cover"  />
+                <Image src={getImageSrcById(activeGalleryImage, product.images)} layout="fill" objectFit="cover"/>
             </div>
         </section>
     </>

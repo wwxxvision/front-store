@@ -11,6 +11,7 @@ export default function News() {
     return <div ref={sliderRef} className="keen-slider news-slider">
         <div className="keen-slider__slide">
             <div className="keen-slider__slide__wrapper">
+                <h1 className="text">Мужская, женская одежда</h1>
                 <Image src="/news/bg.jpg" objectFit="cover" layout="fill" alt="Новости"/>
             </div>
         </div>
