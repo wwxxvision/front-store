@@ -38,7 +38,7 @@ export default function Catalog({topCategories, childTopCategoriesList, category
     return (
         <>
             <Head>
-                <title>Create Next App</title>
+                <title>{category.name}</title>
                 <link rel="icon" href="/favicon.ico"/>
                 <link rel="preconnect" href="https://fonts.gstatic.com"/>
                 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600&display=swap"

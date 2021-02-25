@@ -15,6 +15,7 @@ import Input from "./input";
 import OrderForm from "./orderForm";
 import Radio from "./radio";
 import Menu from "./menu";
+import News from "./news";
 
 export  {
     DropDown,
@@ -33,5 +34,6 @@ export  {
     Input,
     Radio,
     OrderForm,
-    Menu
+    Menu,
+    News
 }

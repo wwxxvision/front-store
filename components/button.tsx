@@ -1,5 +1,5 @@
 const classNames = require("classnames");
 
-export default  function Button({title, state, clickAction}) {
-    return <div onClick={clickAction} className={classNames({"button": true, "button_state-active": state === 'active', "button_state-disable": state === 'disable'})}>{title}</div>
+export default  function Button({title, state, clickAction, id}) {
+    return <div onClick={clickAction} id={id} className={classNames({"button": true, "button_state-active": state === 'active', "button_state-disable": state === 'disable'})}>{title}</div>
 }

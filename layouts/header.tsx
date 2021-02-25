@@ -50,11 +50,11 @@ export default function Header({topCategories, childTopCategoriesList}) {
                     <img height="14" width="13" alt="Поиск по сайту" src="/icons/union.svg"/>
                 </li>
 
-                <li className="interface-list__item">
-                    <a href="#" className="interface__link">
-                        <img height="14" width="13" alt="Личный кабинет пользователя" src="/icons/profile.svg"/>
-                    </a>
-                </li>
+                {/*<li className="interface-list__item">*/}
+                {/*    <a href="#" className="interface__link">*/}
+                {/*        <img height="14" width="13" alt="Личный кабинет пользователя" src="/icons/profile.svg"/>*/}
+                {/*    </a>*/}
+                {/*</li>*/}
 
                 {/*<li className="interface-list__item">*/}
                 {/*    <a href="#" className="interface__link">*/}
