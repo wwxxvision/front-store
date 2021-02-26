@@ -4,8 +4,9 @@ import {DropDown} from "./index";
 
 import {CONFIG} from "../client/config";
 import {getTopCategoryChildren} from "../client/shop/functions";
-import {useState} from "react";
+import { useState} from "react";
 import {SubscribeWithStore} from "../client/subscribe";
+import {Router} from "next/router";
 
 const classNames = require('classnames');
 
@@ -13,6 +14,13 @@ const classNames = require('classnames');
 export default function Menu() {
     const [idToggleDropDown, toggleDropDown] = useState(false);
     const AppStore = SubscribeWithStore();
+
+    Router.events.on('routeChangeComplete', (url) => {
+        if (AppStore.state.toggleMenu) {
+            AppStore.dispatch({type: 'TOGGLE_MENU', toggleMenu: false});
+        }
+    });
+
     return <div className="menu-sidebar">
         <div className="menu-sidebar__background"></div>
 
