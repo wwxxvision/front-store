@@ -19,6 +19,8 @@ import News from "./news";
 import Modal from './modal';
 import AnimatedList from "./animatedList";
 import ModalOrder from "./modalOrder";
+import TextArea from "./textarea";
+import ModalReturnOrder from "./modalReturnOrder";
 
 export  {
     DropDown,
@@ -41,5 +43,7 @@ export  {
     News,
     Modal,
     AnimatedList,
-    ModalOrder
+    ModalOrder,
+    TextArea,
+    ModalReturnOrder
 }

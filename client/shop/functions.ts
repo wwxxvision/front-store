@@ -150,3 +150,18 @@ export function createDataOrder(cart, formValues) {
 
     return dataOrder;
 }
+
+export function getTitleOrderStatus(status) {
+    if (status === 'processing') {
+        return 'Ожидает доставки';
+    }
+    else if (status === 'completed') {
+        return 'Доставлен';
+    }
+    else if (status === 'cancelled') {
+        return 'Отменен';
+    }
+    else {
+        'Ожидает доставки'
+    }
+}

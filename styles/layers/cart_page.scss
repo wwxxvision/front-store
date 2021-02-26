@@ -12,6 +12,23 @@
         flex-direction: column;
         height: 100%;
 
+        .order-status {
+          margin-top: 10px;
+          @include font('monserat-500', 'sm', 'orange', 14px);
+
+          &.order-status_state-processing {
+
+          }
+
+          &.order-status_state-cancelled{
+            color: color('notify_error_color');
+          }
+
+          &.order-status_state-completed {
+            color: color('green');
+          }
+        }
+
         .product-ordered-list {
           flex-grow: 1;
         }
