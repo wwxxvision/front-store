@@ -4,10 +4,9 @@ import {SubscribeWithStore} from "../client/subscribe";
 import Link from 'next/link';
 import {DropDown} from "../components";
 import Image from  'next/image';
+import {getTopCategoryChildren} from "../client/shop/functions";
 
-function getTopCategoryChildren(childTopCategoriesList, parentID) {
-    return childTopCategoriesList.filter(childTopCategory => childTopCategory.parent == parentID);
-}
+
 
 export default function Header({topCategories, childTopCategoriesList}) {
     const AppStore = SubscribeWithStore();

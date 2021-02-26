@@ -1,7 +1,8 @@
 import Link from 'next/link';
+const classNames = require('classnames');
 
-export default function DropDown({childTopCategoriesList}) {
-    return <div className="dropdown">
+export default function DropDown({childTopCategoriesList, fromMenu = false}) {
+    return <div className={classNames('dropdown', {'dropdown-from-menu': fromMenu} )}>
         <div className="dropdown__wrapper">
             <div className="dropdown__group">
                 <div className="title">

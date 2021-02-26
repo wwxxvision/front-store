@@ -165,3 +165,7 @@ export function getTitleOrderStatus(status) {
         'Ожидает доставки'
     }
 }
+
+export function getTopCategoryChildren(childTopCategoriesList, parentID) {
+    return childTopCategoriesList.filter(childTopCategory => childTopCategory.parent == parentID);
+}
