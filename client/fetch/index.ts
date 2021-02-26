@@ -4,6 +4,7 @@ import fetchProducts from "./fetchProducts";
 import fetchAttributes from "./fetchAttributes";
 import fetchAttributeTerms from "./fetchAttributeTerms";
 import fetchMakeOrder from "./fetchMakeOrder";
+import fetchOrder from "./fetchOrder";
 
 export {
     fetchTopCategories,
@@ -11,5 +12,6 @@ export {
     fetchProducts,
     fetchAttributes,
     fetchAttributeTerms,
-    fetchMakeOrder
+    fetchMakeOrder,
+    fetchOrder
 }

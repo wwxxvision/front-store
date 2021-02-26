@@ -19,4 +19,36 @@
       }
     }
   }
+  &.modal-order {
+    .modal__wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .modal__close {
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+        img {
+          cursor: pointer;
+        }
+      }
+
+      .modal__title {
+        margin-top: 20px;
+      }
+
+      .modal__text {
+        width: 65%;
+        text-align: center;
+        margin-top: 10px;
+        @include font('monserat-500', 'sm', 'main_text_color', 140%);
+      }
+
+      .modal__footer {
+        @include font('monserat-500', 'sm', 'reset_button', 140%);
+        margin-top: 20px;
+      }
+    }
+  }
 }

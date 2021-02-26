@@ -1,5 +1,8 @@
 export const CONFIG = {
     PRODUCTS_PER_PAGE: 6,
+    ORGANIZATION: {
+      EMAIL_SUPPORT: 'fafafff@gmail.com'
+    },
     ATTRIBUTES: [{
         "id": 2,
         "name": "Цвет",

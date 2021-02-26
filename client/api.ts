@@ -70,5 +70,14 @@ export const API = {
                 "Content-Type": "application/json"
             }
         }
+    },
+    GET_ORDER: {
+        url: "/api/get/model?method=GetList&endpoint=orders/",
+        options: {
+            method: "GET",
+            headers:  {
+                "Content-Type": "application/json"
+            }
+        }
     }
 }

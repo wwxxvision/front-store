@@ -1,0 +1,13 @@
+.product-ordered-list {
+  margin-top: 20px;
+  .product-ordered-list__item {
+    @include font('mosnerat-500', 'sm', 'main_text_color', 14px);
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 10px;
+    border-bottom: 1px solid color('main_text_color');
+    &:not(:first-child) {
+      margin-top: 20px;
+    }
+  }
+}

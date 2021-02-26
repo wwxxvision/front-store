@@ -4,7 +4,7 @@ import {calculateTotal} from "../client/shop/functions";
 import {Button, Spinner} from "./index";
 
 
-export default function CheckoutTotalWidget({btnTitle, clickAction, products, cartIsValide, pending = false}) {
+export default function CheckoutTotalWidget({btnTitle, clickAction, products, cartIsValide, pending = false, useButton = true}) {
     return <div className="checkout-price">
         <h2 className="checkout-price__title">Ваш заказ</h2>
         <div className="checkout-price__positions-list">
@@ -18,7 +18,7 @@ export default function CheckoutTotalWidget({btnTitle, clickAction, products, ca
             <div className="name">Итого</div>
             <div className="price">{calculateTotal(products)} руб</div>
         </div>
-        {!pending && <Button title={btnTitle} clickAction={clickAction} state={cartIsValide ? "active" : "disable"} />}
+        {!pending && useButton && <Button title={btnTitle} clickAction={clickAction} state={cartIsValide ? "active" : "disable"} />}
         {pending && <Spinner />}
     </div>
 }

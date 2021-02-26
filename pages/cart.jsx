@@ -11,7 +11,7 @@ import {MESSAGES} from "../client/messages";
 
 
 import {Header, Page} from "../layouts";
-import {Spinner, ProductCart, CheckoutTotalWidget, OrderForm, Menu, AnimatedList} from "../components";
+import {Spinner, ProductCart, CheckoutTotalWidget, OrderForm, Menu, ModalOrder} from "../components";
 import Footer from "../layouts/footer";
 import {useRouter} from "next/router";
 import {CONFIG} from "../client/config";
@@ -44,11 +44,11 @@ const OrderSchema = Yup.object().shape({
 });
 
 
-
 export default function Cart() {
     const [cart, deleteProductFromCart, isLoading, clearCart] = useSubscribeOnCart();
     const [isCheckout, setCheckout] = useState(false);
     const [pendingOrderResult, setPendingOrderResult] = useState(false);
+    const [orderID, setOrderID] = useState(null);
     const AppStore = SubscribeWithStore();
     const router = useRouter();
 
@@ -83,8 +83,8 @@ export default function Cart() {
             setPendingOrderResult(false);
 
             if (order.data.created) {
+                setOrderID(order.data.data.id)
                 clearCart();
-                router.push('/order_status', {id: order.data.data.id})
             } else {
 
             }
@@ -96,6 +96,9 @@ export default function Cart() {
     return <Page title={pageTitle}>
         <Header topCategories={CONFIG.TOP_CATEGORIES} childTopCategoriesList={CONFIG.CATEGORIES}/>
         {AppStore.state.toggleMenu && <Menu/>}
+        {orderID &&
+         <ModalOrder onClose={() => router.push('/')} orderID={orderID}/>
+        }
         <div className="wrapper">
             <section className="page-cart">
                 <Formik
