@@ -25,7 +25,10 @@ export default function Header({topCategories, childTopCategoriesList}) {
                     return (
                         <li
                             key={topCategory.id} className="menu__item">
-                            <Link href={{pathname: '/catalog', query: {slug: topCategory.slug}}} as={link}>
+                            <Link   href={{
+                                pathname: '/catalog/[slug]',
+                                query: { slug: topCategory.slug },
+                            }}>
                                 <a className="menu__link menu__link_state-active">
                                     {topCategory.name}
                                 </a>

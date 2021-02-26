@@ -18,6 +18,7 @@ import {VariantsList} from "../../containers";
 import {BreadCrumb, Button, ImageGallery, Menu, Modal, ProductCart} from "../../components";
 import Image from 'next/image';
 import {removeHTML} from "../../client/utils";
+import {CONFIG} from "../../client/config";
 
 
 export default function Catalog({topCategories, childTopCategoriesList, category, product, allCategories, variants}) {
@@ -27,7 +28,6 @@ export default function Catalog({topCategories, childTopCategoriesList, category
     const variantIsOutOfStock = variant.stock_quantity == 0 || variant.stock_quantity < 0;
     const AppStore = SubscribeWithStore();
     const router = useRouter();
-
 
     return <>
         <Head>
@@ -70,7 +70,7 @@ export default function Catalog({topCategories, childTopCategoriesList, category
 
                         {variantIsOutOfStock &&
                         <span
-                            className="product__status product__status_outofstock">Выбранного размера нет в наличии</span>
+                            className="product__status product__status_outofstock">Нет в наличии</span>
                         }
                         <VariantsList variants={attributesVariant}/>
 
@@ -107,10 +107,9 @@ export default function Catalog({topCategories, childTopCategoriesList, category
     </>
 }
 
-
 export async function getServerSideProps({params}) {
-    const topCategories = await fetchTopCategories();
-    const childTopCategoriesList = await fetchChildTopCategories(topCategories);
+    const topCategories = CONFIG.TOP_CATEGORIES;
+    const childTopCategoriesList = CONFIG.CATEGORIES;
     const allCategories = [...childTopCategoriesList, ...topCategories];
     let product = await fetchProduct(params.id);
     product = product[0];

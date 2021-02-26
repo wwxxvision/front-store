@@ -17,6 +17,7 @@ import Radio from "./radio";
 import Menu from "./menu";
 import News from "./news";
 import Modal from './modal';
+import AnimatedList from "./animatedList";
 
 export  {
     DropDown,
@@ -37,5 +38,6 @@ export  {
     OrderForm,
     Menu,
     News,
-    Modal
+    Modal,
+    AnimatedList
 }

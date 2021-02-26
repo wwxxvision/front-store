@@ -1,6 +1,4 @@
 import {
-    fetchChildTopCategories,
-    fetchTopCategories,
     fetchMakeOrder
 } from "../client/fetch";
 import {Empty} from "../client/utils";
@@ -11,11 +9,12 @@ import {Formik} from 'formik';
 import * as Yup from 'yup';
 import {MESSAGES} from "../client/messages";
 
-import Head from 'next/head'
-import {Header} from "../layouts";
-import {Spinner, ProductCart, CheckoutTotalWidget, OrderForm, Menu, Modal} from "../components";
+
+import {Header, Page} from "../layouts";
+import {Spinner, ProductCart, CheckoutTotalWidget, OrderForm, Menu, AnimatedList} from "../components";
 import Footer from "../layouts/footer";
 import {useRouter} from "next/router";
+import {CONFIG} from "../client/config";
 
 
 const OrderSchema = Yup.object().shape({
@@ -44,7 +43,9 @@ const OrderSchema = Yup.object().shape({
         .required('Обязательно для заполнения'),
 });
 
-export default function Cart({topCategories, childTopCategoriesList}) {
+
+
+export default function Cart() {
     const [cart, deleteProductFromCart, isLoading, clearCart] = useSubscribeOnCart();
     const [isCheckout, setCheckout] = useState(false);
     const [pendingOrderResult, setPendingOrderResult] = useState(false);
@@ -54,6 +55,7 @@ export default function Cart({topCategories, childTopCategoriesList}) {
     const pageTitle = isCheckout ? 'Оформление заказ' : 'Корзина';
     const btnTitle = isCheckout ? 'Купить' : 'Оформление заказа';
     const cartIsValide = !Empty(cart) && !allCartItemsOutOfStock(cart);
+
 
     const checkout = () => {
         if (!cartIsValide) {
@@ -91,15 +93,8 @@ export default function Cart({topCategories, childTopCategoriesList}) {
     }
 
 
-    return <>
-        <Head>
-            <title>{pageTitle}</title>
-            <link rel="icon" href="/favicon.ico"/>
-            <link rel="preconnect" href="https://fonts.gstatic.com"/>
-            <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600&display=swap"
-                  rel="stylesheet"/>
-        </Head>
-        <Header topCategories={topCategories} childTopCategoriesList={childTopCategoriesList}/>
+    return <Page title={pageTitle}>
+        <Header topCategories={CONFIG.TOP_CATEGORIES} childTopCategoriesList={CONFIG.CATEGORIES}/>
         {AppStore.state.toggleMenu && <Menu/>}
         <div className="wrapper">
             <section className="page-cart">
@@ -148,23 +143,19 @@ export default function Cart({topCategories, childTopCategoriesList}) {
                             </div>
 
                             <div className="block">
-                                {!isLoading &&
-                                <>
-                                    <CheckoutTotalWidget btnTitle={btnTitle}
-                                                         pending={pendingOrderResult}
-                                                         clickAction={!isCheckout ? checkout : () => makeOrder(handleSubmit)}
-                                                         cartIsValide={cartIsValide} products={cart}/>
-                                    <div className="block notify">
-                                        {allCartItemsOutOfStock(cart) &&
-                                        <div className="notify__message">{MESSAGES.CART_IS_EMPTY}</div>
-                                        }
-                                        {Empty(cart) &&
-                                        <div
-                                            className="notify__message">{MESSAGES.CART_HAS_ITEM_WHICH_OUT_OF_STOCK}</div>
-                                        }
-                                    </div>
-                                </>
-                                }
+                                <CheckoutTotalWidget btnTitle={btnTitle}
+                                                     pending={pendingOrderResult}
+                                                     clickAction={!isCheckout ? checkout : () => makeOrder(handleSubmit)}
+                                                     cartIsValide={cartIsValide} products={cart}/>
+                                <div className="block notify">
+                                    {allCartItemsOutOfStock(cart) &&
+                                    <div className="notify__message">{MESSAGES.CART_IS_EMPTY}</div>
+                                    }
+                                    {Empty(cart) &&
+                                    <div
+                                        className="notify__message">{MESSAGES.CART_HAS_ITEM_WHICH_OUT_OF_STOCK}</div>
+                                    }
+                                </div>
                             </div>
                         </>
 
@@ -173,18 +164,7 @@ export default function Cart({topCategories, childTopCategoriesList}) {
             </section>
         </div>
         <Footer/>
-    </>
+    </Page>
 }
 
 
-export async function getServerSideProps() {
-    const topCategories = await fetchTopCategories();
-    const childTopCategoriesList = await fetchChildTopCategories(topCategories);
-
-    return {
-        props: {
-            topCategories: topCategories,
-            childTopCategoriesList,
-        }
-    }
-}

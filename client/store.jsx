@@ -28,7 +28,7 @@ const StateProvider = ({children}) => {
                     ...state, cart: action.cart
                 }
             case 'CLEAR_CART':
-                return  {
+                return {
                     ...state, cart: []
                 }
             case 'TOGGLE_MENU':
@@ -63,9 +63,9 @@ const StateProvider = ({children}) => {
             default:
                 throw new Error();
         }
-        ;
     }, initialState);
 
+    
     return <Provider value={{state, dispatch}}>{children}</Provider>;
 };
 

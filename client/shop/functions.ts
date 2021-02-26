@@ -37,7 +37,7 @@ export function getCrumbs(category, allCategories, product) {
     let crubms = [{
         title: "Главная",
         link: {
-            href: '/'
+            href: {pathname: '/', query: {}}
         }
     }];
 
@@ -46,8 +46,7 @@ export function getCrumbs(category, allCategories, product) {
         crubms = [...crubms, {
             title: parent.name,
             link: {
-                href: {pathname: '/catalog', query: {slug: parent.slug}},
-                as: `/catalog/${parent.slug}`
+                href: {pathname: '/catalog/[slug]', query: {slug: parent.slug}},
             }
         }]
     }
@@ -55,8 +54,7 @@ export function getCrumbs(category, allCategories, product) {
     crubms = [...crubms, {
         title: category.name,
         link: {
-            href: {pathname: '/catalog', query: {slug: category.slug}},
-            as: `/catalog/${category.slug}`
+            href: {pathname: '/catalog/[slug]', query: {slug: category.slug}},
         }
     }];
 
@@ -64,8 +62,7 @@ export function getCrumbs(category, allCategories, product) {
         crubms = [...crubms, {
             title: product.name,
             link: {
-                href: {pathname: '/product', query: {product: product.id}},
-                as: `/product/${product.id}`
+                href: {pathname: '/catalog/[slug]', query: {slug: product.slug}},
             }
         }];
     }

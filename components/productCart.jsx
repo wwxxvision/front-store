@@ -1,11 +1,13 @@
 import Image from "next/image";
 
 import {getTitleByStockStatus, isSale} from "../client/shop/functions";
-
 const classNames = require('classnames');
+import {useSpring, animated} from 'react-spring'
 
 export default function ProductCart({product, deleteProductFromCart, canRemove = true}) {
-    return <div className="product-cart">
+    const animations = useSpring({opacity: 1, from: {opacity: 0}})
+
+    return <animated.div style={animations} className="product-cart">
         <div className="product-cart__thumb">
             <Image src={product.image.src} layout="responsive" height="80" width="80" objectFit="cover"/>
         </div>
@@ -47,5 +49,5 @@ export default function ProductCart({product, deleteProductFromCart, canRemove =
                 <Image src="/icons/crash.svg" height="20" width="16"/>
             </div>
         }
-    </div>
+    </animated.div>
 }
