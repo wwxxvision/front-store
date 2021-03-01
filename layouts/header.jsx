@@ -2,7 +2,7 @@ import {Empty} from "../client/utils";
 import {SubscribeWithStore} from "../client/subscribe";
 
 import Link from 'next/link';
-import {DropDown} from "../components";
+import {DropDown, SearchInput} from "../components";
 import Image from  'next/image';
 import {getTopCategoryChildren} from "../client/shop/functions";
 
@@ -49,7 +49,7 @@ export default function Header({topCategories, childTopCategoriesList}) {
         <div className="header__user-interface">
             <ul className="interface-list">
                 <li className="interface-list__item">
-                    <img height="14" width="13" alt="Поиск по сайту" src="/icons/union.svg"/>
+                    <SearchInput title="Поиск товаров" />
                 </li>
 
                 {/*<li className="interface-list__item">*/}

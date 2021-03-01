@@ -21,6 +21,7 @@ import AnimatedList from "./animatedList";
 import ModalOrder from "./modalOrder";
 import TextArea from "./textarea";
 import ModalReturnOrder from "./modalReturnOrder";
+import SearchInput from "./searchInput";
 
 export  {
     DropDown,
@@ -45,5 +46,6 @@ export  {
     AnimatedList,
     ModalOrder,
     TextArea,
-    ModalReturnOrder
+    ModalReturnOrder,
+    SearchInput
 }

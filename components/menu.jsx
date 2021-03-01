@@ -35,7 +35,7 @@ export default function Menu() {
             </div>
 
             {CONFIG.TOP_CATEGORIES.map(cat => (
-                <div onClick={() => toggleDropDown(cat.id)}
+                <div onMouseEnter={() => toggleDropDown(cat.id)}
                      className={classNames(['menu-sidebar__row', {'menu-sidebar__row_state-active': idToggleDropDown === cat.id}])}>
                     {cat.name}
                 </div>
